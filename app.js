@@ -1,5 +1,7 @@
 const express = require("express");
 
+require("dotenv").config();
+
 const path = require("path");
 
 const session = require("express-session");
@@ -8,11 +10,15 @@ const app = express();
 
 const { loginRouter } = require("./src/routers/loginRouter.js");
 
+const { registerRouter } = require("./src/routers/registerRouter.js");
+
 const { validateLogin } = require("./src/middlewares/validation.js");
 
 app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "./src/views"));
+
+app.use(express.json());
 
 app.use(
   session({
@@ -29,5 +35,7 @@ app.get("/", validateLogin, (req, res) => {
 });
 
 app.use("/login", loginRouter);
+
+app.use("/register", registerRouter);
 
 module.exports = { app };

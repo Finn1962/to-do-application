@@ -2,6 +2,7 @@
   "name": "mini-message-board",
   "version": "1.0.0",
   "scripts": {
+    "pretest": "clear",
     "test": "jest",
     "start": "node --watch server.js"
   },
@@ -11,14 +12,22 @@
     "ejs": "^6.0.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
-    "express-validator": "^7.3.2"
+    "express-validator": "^7.3.2",
+    "pg": "^8.23.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "eslint": "^10.8.1",
+    "eslint-plugin-ejs": "^0.0.2",
+    "globals": "^17.11.0",
     "jest": "^30.4.2",
     "supertest": "^7.2.2"
   },
   "allowScripts": {
     "jest@30.4.2": true,
-    "supertest@7.2.2": true
+    "supertest@7.2.2": true,
+    "eslint@10.8.1": true,
+    "eslint-plugin-ejs@0.0.2": true,
+    "pg@8.23.0": true
   }
 }
