@@ -12,7 +12,7 @@ const { loginRouter } = require("./src/routers/loginRouter.js");
 
 const { registerRouter } = require("./src/routers/registerRouter.js");
 
-const { validateLogin } = require("./src/middlewares/validation.js");
+const { validateLogin } = require("./src/middlewares/validationLogin.js");
 
 app.set("view engine", "ejs");
 
