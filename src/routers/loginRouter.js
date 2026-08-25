@@ -2,7 +2,7 @@ const express = require("express");
 
 const { comparePassword } = require("../middlewares/hash.js");
 
-const { Users } = require("../db/queries/users.js");
+const { Users } = require("../db/queries.js");
 
 const loginRouter = express.Router();
 
@@ -27,7 +27,8 @@ loginRouter.post(
 
     if (isMatch) {
       req.session.user = {
-        username: userData.username,
+        name: userData.username,
+        id: userData.id,
       };
       return res.redirect("/");
     }

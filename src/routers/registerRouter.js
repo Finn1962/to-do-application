@@ -4,7 +4,7 @@ const { body, validationResult } = require("express-validator");
 
 const { hashPassword } = require("../middlewares/hash.js");
 
-const { Users } = require("../db/queries/users.js");
+const { Users } = require("../db/queries.js");
 
 const registerRouter = express.Router();
 
@@ -18,14 +18,12 @@ registerRouter.post(
     body("username").notEmpty(),
     body("password").notEmpty().isLength({ min: 8 }),
     body("confirmPassword").notEmpty().isLength({ min: 8 }),
-    body("confirmPassword")
-      .notEmpty()
-      .custom((value, { req }) => {
-        if (value !== req.body.password) {
-          throw new Error("Passwörter stimmen nicht überein");
-        }
-        return true;
-      }),
+    body("confirmPassword").custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error("Passwörter stimmen nicht überein");
+      }
+      return true;
+    }),
   ],
 
   (req, res, next) => {

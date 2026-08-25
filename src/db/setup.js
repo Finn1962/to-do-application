@@ -16,13 +16,23 @@ async function createTables() {
         username VARCHAR(255) NOT NULL,
         password_hash TEXT NOT NULL
       );
+
+      CREATE TABLE IF NOT EXISTS tasks (
+        id SERIAL PRIMARY KEY,
+        user_id INTEGER NOT NULL,
+        title VARCHAR(255) NOT NULL,
+        description TEXT,
+        completed BOOLEAN DEFAULT FALSE,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+      );
     `);
 
     console.log("Created tables successfully");
   } catch (err) {
     console.error("Error creating tables:", err);
   } finally {
-    await client.end(); // Wird IMMER ausgeführt, auch bei Fehlern
+    await client.end();
   }
 }
 

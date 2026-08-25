@@ -1,9 +1,9 @@
 const request = require("supertest");
 const { app } = require("../app.js");
 
-const { Users } = require("../src/db/queries/users.js");
+const { Users } = require("../src/db/queries.js");
 
-jest.mock("../src/db/queries/users.js", () => ({
+jest.mock("../src/db/queries.js", () => ({
   Users: {
     createUser: jest.fn(),
     getUserDataByUsername: jest.fn(),
