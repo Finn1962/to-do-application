@@ -12,6 +12,8 @@ const { loginRouter } = require("./src/routers/loginRouter.js");
 
 const { registerRouter } = require("./src/routers/registerRouter.js");
 
+const { projectsRouter } = require("./src/routers/projectsRouter.js");
+
 const { tasksRouter } = require("./src/routers/tasksRouter.js");
 
 const { validateLogin } = require("./src/middlewares/validationLogin.js");
@@ -39,6 +41,8 @@ app.get("/", validateLogin, (req, res) => {
 app.use("/login", loginRouter);
 
 app.use("/register", registerRouter);
+
+app.use("/project", projectsRouter);
 
 app.use("/task", tasksRouter);
 

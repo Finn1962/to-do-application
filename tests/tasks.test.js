@@ -91,7 +91,7 @@ describe("/login", () => {
     });
   });
 
-  it("test", async () => {
+  it("should delete task", async () => {
     const response = await request(app).delete("/task/delete?taskId=2");
 
     expect(response.statusCode).toBe(200);
