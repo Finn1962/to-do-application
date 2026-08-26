@@ -97,6 +97,19 @@ tasksRouter.patch(
   },
 );
 
+tasksRouter.get(
+  "/delete",
+
+  [query("taskId").isInt({ min: 1 }).toInt()],
+
+  validateInputs,
+
+  async (req, res) => {
+    const { taskId } = matchedData(req);
+    res.send(taskId);
+  },
+);
+
 tasksRouter.delete(
   "/delete",
 

@@ -91,6 +91,12 @@ describe("/login", () => {
     });
   });
 
+  it("should show delete form", async () => {
+    const response = await request(app).get("/task/delete?taskId=2");
+
+    expect(response.statusCode).toBe(200);
+  });
+
   it("should delete task", async () => {
     const response = await request(app).delete("/task/delete?taskId=2");
 
