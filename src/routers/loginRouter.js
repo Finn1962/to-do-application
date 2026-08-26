@@ -7,7 +7,7 @@ const { Users } = require("../db/queries.js");
 const loginRouter = express.Router();
 
 loginRouter.get("/", (req, res) => {
-  res.send();
+  res.render("login", {});
 });
 
 loginRouter.post(
