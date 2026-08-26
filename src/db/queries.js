@@ -33,6 +33,70 @@ class Users {
   }
 }
 
+class Projects {
+  static async createProject(title, userId) {
+    try {
+      await pool.query(
+        "INSERT INTO projects (user_id, title) VALUES ($1, $2)",
+        [userId, title],
+      );
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  static async getAllProjectsByUserId(userId) {
+    try {
+      const { rows } = await pool.query(
+        "SELECT * FROM projects WHERE user_id = $1",
+        [userId],
+      );
+      return rows;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  static async getProjectByProjectId(projectId, userId) {
+    try {
+      const { rows } = await pool.query(
+        "SELECT * FROM projects WHERE id = $1 AND user_id = $2",
+        [projectId, userId],
+      );
+      return rows[0];
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  static async editProject({ projectId, title, userId }) {
+    try {
+      await pool.query(
+        "UPDATE projects SET title = $1 WHERE id = $2 AND user_id = $3",
+        [title, projectId, userId],
+      );
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
+  static async deleteTask(projectId, userId) {
+    try {
+      await pool.query("DELETE FROM projects WHERE id = $1 AND user_id = $2", [
+        projectId,
+        userId,
+      ]);
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+}
+
 class Tasks {
   static async createTask({ title, description, userId }) {
     try {
@@ -109,4 +173,4 @@ class Tasks {
   }
 }
 
-module.exports = { Users, Tasks };
+module.exports = { Users, Projects, Tasks };

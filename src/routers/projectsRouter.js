@@ -10,6 +10,8 @@ const projectsRouter = express.Router();
 
 const { validateInputs } = require("../middlewares/validationInputs.js");
 
+//const {  } =
+
 projectsRouter.get("/new", (req, res) => {
   res.status(200).end();
 });
