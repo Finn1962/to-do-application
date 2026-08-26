@@ -34,8 +34,7 @@ app.use(
 );
 
 app.get("/", validateLogin, (req, res) => {
-  console.log("index aufgerufen");
-  res.end();
+  res.render("index", {});
 });
 
 app.use("/login", loginRouter);
