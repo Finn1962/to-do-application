@@ -98,11 +98,11 @@ class Projects {
 }
 
 class Tasks {
-  static async createTask({ title, description, userId }) {
+  static async createTask({ userId, projectId, title, description }) {
     try {
       await pool.query(
-        "INSERT INTO tasks (user_id, title, description) VALUES ($1, $2, $3)",
-        [userId, title, description],
+        "INSERT INTO tasks (user_id, project_id, title, description) VALUES ($1, $2, $3, $4)",
+        [userId, projectId, title, description],
       );
     } catch (error) {
       console.error(error);

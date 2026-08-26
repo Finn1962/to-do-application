@@ -33,16 +33,19 @@ describe("/login", () => {
   });
 
   it("should create a new task", async () => {
-    const response = await request(app)
-      .post("/task/new")
-      .send({ title: "Test Task", description: "Test Description" });
+    const response = await request(app).post("/task/new").send({
+      title: "Test Task",
+      projectId: 2,
+      description: "Test Description",
+    });
 
     expect(response.status).toBe(302);
     expect(response.headers.location).toBe("/");
     expect(Tasks.createTask).toHaveBeenCalledWith({
+      userId: 1,
+      projectId: 2,
       title: "Test Task",
       description: "Test Description",
-      userId: 1,
     });
   });
 

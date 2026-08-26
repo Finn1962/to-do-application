@@ -17,6 +17,7 @@ tasksRouter.post(
 
   [
     body("title").trim().notEmpty().escape(),
+    body("projectId").isInt({ min: 1 }).toInt(),
     body("description").optional().trim().escape(),
   ],
 
@@ -26,9 +27,10 @@ tasksRouter.post(
     const data = matchedData(req);
 
     await Tasks.createTask({
+      userId: req.session.user.id,
+      projectId: data.projectId,
       title: data.title,
       description: data.description,
-      userId: req.session.user.id,
     });
 
     res.redirect("/");
