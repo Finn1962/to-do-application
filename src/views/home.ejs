@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="de">
+<html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -29,14 +29,17 @@
             <span class="fs-4">whatToDo</span>
           </a>
           <hr />
+
           <ul class="nav nav-pills flex-column mb-auto">
+            <% projects.forEach((project)=>{ %>
+            <%if (project.id === selectedProject.id) {%>
             <li class="nav-item">
               <a
-                href="#"
+                href="<%=`/?projectId=${project.id}`%>"
                 class="nav-link active d-flex justify-content-between"
                 aria-current="page"
               >
-                Home
+                <h5 class="m-0"><%=project.title%></h5>
                 <div class="d-flex gap-3">
                   <button
                     class="d-flex justify-content-center align-items-center bg-transparent border-0 p-0"
@@ -50,10 +53,25 @@
                   </button></div
               ></a>
             </li>
+            <%} else {%>
             <li>
-              <a href="#" class="nav-link link-body-emphasis"> Dashboard </a>
+              <a
+                href="<%=`/?projectId=${project.id}`%>"
+                class="nav-link link-body-emphasis"
+              >
+                Dashboard
+              </a>
             </li>
+            <%}%>
+            <% }); %>
           </ul>
+
+          <div class="d-grid gap-2">
+            <a href="/project/new" class="btn btn-outline-primary" type="button"
+              >Add Project</a
+            >
+          </div>
+
           <hr />
           <div class="dropdown">
             <a
@@ -81,27 +99,29 @@
           </div>
         </div>
 
-        <div class="list-group flex-grow-1" style="border-radius: 0">
+        <div
+          class="list-group flex-grow-1 position-relative"
+          style="border-radius: 0"
+        >
+          <% assignedTasks.forEach((task)=>{ %>
           <a
             href="#"
-            class="list-group-item list-group-item-action active"
+            class="list-group-item list-group-item-action active z-0"
             aria-current="true"
           >
             <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">List group item heading</h5>
-              <small>3 days ago</small>
+              <h5 class="mb-1"><%=task.title%></h5>
+              <small><%=task.created_at.toLocaleDateString('de-DE')%></small>
             </div>
-            <small>And some small print.</small>
+            <small><%=task.description%></small>
           </a>
-          <a href="#" class="list-group-item list-group-item-action">
-            <div class="d-flex w-100 justify-content-between">
-              <h5 class="mb-1">List group item heading</h5>
-              <small class="text-body-secondary">3 days ago</small>
-            </div>
-            <small class="text-body-secondary"
-              >And some muted small print.</small
-            >
-          </a>
+          <% }); %>
+          <button
+            type="button"
+            class="btn btn-outline-primary position-absolute bottom-0 end-0 z-5 mb-3 me-3"
+          >
+            Add Task
+          </button>
         </div>
 
         <div class="flex-grow-1 border p-3" style="max-width: 400px">
@@ -121,10 +141,12 @@
               </button>
             </div>
 
-            <p class="m-0">09.10.26</p>
+            <p class="m-0">
+              <%=selectedTask?.created_at.toLocaleDateString('de-DE')%>
+            </p>
           </div>
-          <h5>List group item heading</h5>
-          <p>Some placeholder content in a paragraph.</p>
+          <h5><%=selectedTask?.title%></h5>
+          <p><%=selectedTask?.description%></p>
         </div>
       </div>
 

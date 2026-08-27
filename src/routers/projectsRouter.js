@@ -9,7 +9,7 @@ const { validateInputs } = require("../middlewares/validationInputs.js");
 const { Projects } = require("../db/queries.js");
 
 projectsRouter.get("/new", (req, res) => {
-  res.status(200).end();
+  res.render("newProjectForm");
 });
 
 projectsRouter.post(

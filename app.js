@@ -8,6 +8,8 @@ const session = require("express-session");
 
 const app = express();
 
+const { homeRouter } = require("./src/routers/homeRouter.js");
+
 const { loginRouter } = require("./src/routers/loginRouter.js");
 
 const { registerRouter } = require("./src/routers/registerRouter.js");
@@ -15,8 +17,6 @@ const { registerRouter } = require("./src/routers/registerRouter.js");
 const { projectsRouter } = require("./src/routers/projectsRouter.js");
 
 const { tasksRouter } = require("./src/routers/tasksRouter.js");
-
-const { validateLogin } = require("./src/middlewares/validationLogin.js");
 
 app.set("view engine", "ejs");
 
@@ -37,10 +37,6 @@ app.use(
   }),
 );
 
-app.get("/", validateLogin, (req, res) => {
-  res.render("home", {});
-});
-
 app.use("/login", loginRouter);
 
 app.use("/register", registerRouter);
@@ -48,5 +44,7 @@ app.use("/register", registerRouter);
 app.use("/project", projectsRouter);
 
 app.use("/task", tasksRouter);
+
+app.use("/", homeRouter);
 
 module.exports = { app };

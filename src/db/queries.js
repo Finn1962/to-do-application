@@ -123,6 +123,19 @@ class Tasks {
     }
   }
 
+  static async getAllTasksAssignedToProjectId(projectId, userId) {
+    try {
+      const { rows } = await pool.query(
+        "SELECT * FROM tasks WHERE project_id = $1 AND user_id = $2",
+        [projectId, userId],
+      );
+      return rows;
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   static async getTaskByTaskId(taskId, userId) {
     try {
       const { rows } = await pool.query(

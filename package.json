@@ -21,6 +21,8 @@
     "eslint-plugin-ejs": "^0.0.2",
     "globals": "^17.11.0",
     "jest": "^30.4.2",
+    "prettier": "^3.9.6",
+    "prettier-plugin-ejs": "^1.0.3",
     "supertest": "^7.2.2"
   },
   "allowScripts": {
@@ -28,6 +30,7 @@
     "supertest@7.2.2": true,
     "eslint@10.8.1": true,
     "eslint-plugin-ejs@0.0.2": true,
-    "pg@8.23.0": true
+    "pg@8.23.0": true,
+    "prettier-plugin-ejs@1.0.3": true
   }
 }
