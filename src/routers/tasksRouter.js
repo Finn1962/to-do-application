@@ -8,9 +8,18 @@ const { Tasks } = require("../db/queries.js");
 
 const { validateInputs } = require("../middlewares/validationInputs.js");
 
-tasksRouter.get("/new", (req, res) => {
-  res.send();
-});
+tasksRouter.get(
+  "/new",
+
+  [query("projectId").isInt({ min: 1 }).toInt()],
+
+  validateInputs,
+
+  (req, res) => {
+    const { projectId } = matchedData(req);
+    res.render("newTaskForm", { projectId });
+  },
+);
 
 tasksRouter.post(
   "/new",

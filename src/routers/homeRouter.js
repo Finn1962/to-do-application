@@ -15,7 +15,10 @@ homeRouter.get(
 
   validateLogin,
 
-  [query("projectId").optional().isInt({ min: 1 }).toInt()],
+  [
+    query("projectId").optional().isInt({ min: 1 }).toInt(),
+    query("taskId").optional().isInt({ min: 1 }).toInt(),
+  ],
 
   validateInputs,
 
@@ -30,7 +33,7 @@ homeRouter.get(
         selectedTask: null,
       });
 
-    const { projectId } = matchedData(req);
+    const { projectId, taskId } = matchedData(req);
 
     const selectedProject =
       (projectId && projects.find((project) => project.id === projectId)) ||
@@ -41,7 +44,10 @@ homeRouter.get(
       req.session.user.id,
     );
 
-    const selectedTask = assignedTasks[0] || null;
+    const selectedTask =
+      (taskId && assignedTasks.find((task) => task.id === taskId)) ||
+      assignedTasks[0] ||
+      null;
 
     res.render("home", {
       projects: projects,
