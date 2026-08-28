@@ -49,7 +49,7 @@ class Projects {
   static async getAllProjectsByUserId(userId) {
     try {
       const { rows } = await pool.query(
-        "SELECT * FROM projects WHERE user_id = $1",
+        "SELECT * FROM projects WHERE user_id = $1 ORDER BY id ASC",
         [userId],
       );
       return rows;
@@ -113,7 +113,7 @@ class Tasks {
   static async getAllTasksByUserId(userId) {
     try {
       const { rows } = await pool.query(
-        "SELECT * FROM tasks WHERE user_id = $1",
+        "SELECT * FROM tasks WHERE user_id = $1 ORDER BY id ASC",
         [userId],
       );
       return rows;
@@ -126,7 +126,7 @@ class Tasks {
   static async getAllTasksAssignedToProjectId(projectId, userId) {
     try {
       const { rows } = await pool.query(
-        "SELECT * FROM tasks WHERE project_id = $1 AND user_id = $2",
+        "SELECT * FROM tasks WHERE project_id = $1 AND user_id = $2 ORDER BY id ASC",
         [projectId, userId],
       );
       return rows;
