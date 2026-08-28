@@ -8,6 +8,8 @@ const session = require("express-session");
 
 const app = express();
 
+const { validateLogin } = require("./src/middlewares/validationLogin.js");
+
 const { homeRouter } = require("./src/routers/homeRouter.js");
 
 const { loginRouter } = require("./src/routers/loginRouter.js");
@@ -41,10 +43,10 @@ app.use("/login", loginRouter);
 
 app.use("/register", registerRouter);
 
-app.use("/project", projectsRouter);
+app.use("/project", validateLogin, projectsRouter);
 
-app.use("/task", tasksRouter);
+app.use("/task", validateLogin, tasksRouter);
 
-app.use("/", homeRouter);
+app.use("/", validateLogin, homeRouter);
 
 module.exports = { app };

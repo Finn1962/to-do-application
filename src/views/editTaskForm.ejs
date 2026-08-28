@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="/edit-task-form.js" defer></script>
+  </head>
+  <body>
+    <form action="/edit" method="post">
+      <label for="title">Title</label>
+      <input
+        type="text"
+        name="title"
+        id="title"
+        value="<%=taskData.title%>"
+        required
+      />
+      <label for="description">description</label>
+      <input
+        type="text"
+        name="description"
+        id="description"
+        value="<%=taskData.description%>"
+        required
+      />
+      <input type="hidden" name="taskId" value="<%=taskId%>" required />
+      <input type="hidden" name="projectId" value="<%=projectId%>" required />
+      <a href="/?projectId=<%=projectId%>&taskId=<%=taskId%>">Back</a>
+      <button type="submit">Confirm Changes</button>
+    </form>
+  </body>
+</html>

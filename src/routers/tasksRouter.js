@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { body, query, matchedData } = require("express-validator");
+const { body, query, param, matchedData } = require("express-validator");
 
 const tasksRouter = express.Router();
 
@@ -9,9 +9,9 @@ const { Tasks } = require("../db/queries.js");
 const { validateInputs } = require("../middlewares/validationInputs.js");
 
 tasksRouter.get(
-  "/new",
+  "/new/:projectId",
 
-  [query("projectId").isInt({ min: 1 }).toInt()],
+  [param("projectId").isInt({ min: 1 }).toInt()],
 
   validateInputs,
 
@@ -42,21 +42,24 @@ tasksRouter.post(
       description: data.description,
     });
 
-    res.redirect("/");
+    res.redirect(`/?projectId=${data.projectId}`);
   },
 );
 
 tasksRouter.get(
-  "/edit",
+  "/edit/:taskId",
 
-  [query("taskId").isInt({ min: 1 }).toInt()],
+  [
+    param("taskId").isInt({ min: 1 }).toInt(),
+    query("projectId").optional().isInt({ min: 1 }).toInt(),
+  ],
 
   validateInputs,
 
   async (req, res) => {
-    const { taskId } = matchedData(req);
+    const { taskId, projectId } = matchedData(req);
     const taskData = await Tasks.getTaskByTaskId(taskId, req.session.user.id);
-    res.send(taskData);
+    res.render("editTaskForm", { taskData, taskId, projectId });
   },
 );
 
@@ -65,6 +68,7 @@ tasksRouter.put(
 
   [
     body("taskId").isInt({ min: 1 }).toInt(),
+    body("projectId").optional().isInt({ min: 1 }).toInt(),
     body("title").trim().notEmpty().escape(),
     body("description").optional().trim().escape(),
   ],
@@ -81,7 +85,7 @@ tasksRouter.put(
       userId: req.session.user.id,
     });
 
-    res.redirect("/");
+    res.status(200).end();
   },
 );
 
@@ -109,28 +113,31 @@ tasksRouter.patch(
 );
 
 tasksRouter.get(
-  "/delete",
+  "/delete/:taskId",
 
-  [query("taskId").isInt({ min: 1 }).toInt()],
+  [
+    param("taskId").isInt({ min: 1 }).toInt(),
+    query("projectId").optional().isInt({ min: 1 }).toInt(),
+  ],
 
   validateInputs,
 
   async (req, res) => {
-    const { taskId } = matchedData(req);
-    res.send(taskId);
+    const { taskId, projectId } = matchedData(req);
+    res.render("confirmDeleteTask", { taskId, projectId });
   },
 );
 
 tasksRouter.delete(
-  "/delete",
+  "/delete/:taskId",
 
-  [query("taskId").isInt({ min: 1 }).toInt()],
+  [param("taskId").isInt({ min: 1 }).toInt()],
 
   validateInputs,
 
   async (req, res) => {
     const { taskId } = matchedData(req);
-    Tasks.deleteTask(taskId, req.session.user.id);
+    await Tasks.deleteTask(taskId, req.session.user.id);
     res.status(200).end();
   },
 );

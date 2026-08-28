@@ -4,16 +4,12 @@ const homeRouter = express.Router();
 
 const { query, matchedData } = require("express-validator");
 
-const { validateLogin } = require("../middlewares/validationLogin.js");
-
 const { validateInputs } = require("../middlewares/validationInputs.js");
 
 const { Projects, Tasks } = require("../db/queries.js");
 
 homeRouter.get(
   "/",
-
-  validateLogin,
 
   [
     query("projectId").optional().isInt({ min: 1 }).toInt(),

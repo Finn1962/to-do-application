@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { body, query, matchedData } = require("express-validator");
+const { body, query, matchedData, param } = require("express-validator");
 
 const projectsRouter = express.Router();
 
@@ -82,28 +82,28 @@ projectsRouter.put(
 );
 
 projectsRouter.get(
-  "/delete",
+  "/delete/:projectId",
 
-  [query("projectId").isInt({ min: 1 }).toInt()],
+  [param("projectId").isInt({ min: 1 }).toInt()],
 
   validateInputs,
 
   async (req, res) => {
     const { projectId } = matchedData(req);
-    res.send(projectId);
+    res.render("confirmDeleteProject", { projectId });
   },
 );
 
 projectsRouter.delete(
-  "/delete",
+  "/delete/:projectId",
 
-  [query("projectId").isInt({ min: 1 }).toInt()],
+  [param("projectId").isInt({ min: 1 }).toInt()],
 
   validateInputs,
 
   async (req, res) => {
     const { projectId } = matchedData(req);
-    Projects.deleteTask(projectId, req.session.user.id);
+    await Projects.deleteTask(projectId, req.session.user.id);
     res.status(200).end();
   },
 );

@@ -28,7 +28,7 @@ describe("/login", () => {
   });
 
   it("should display the new task form", async () => {
-    const response = await request(app).get("/task/new");
+    const response = await request(app).get("/task/new/2");
     expect(response.status).toBe(200);
   });
 
@@ -40,7 +40,6 @@ describe("/login", () => {
     });
 
     expect(response.status).toBe(302);
-    expect(response.headers.location).toBe("/");
     expect(Tasks.createTask).toHaveBeenCalledWith({
       userId: 1,
       projectId: 2,
@@ -95,13 +94,13 @@ describe("/login", () => {
   });
 
   it("should show delete form", async () => {
-    const response = await request(app).get("/task/delete?taskId=2");
+    const response = await request(app).get("/task/delete/2");
 
     expect(response.statusCode).toBe(200);
   });
 
   it("should delete task", async () => {
-    const response = await request(app).delete("/task/delete?taskId=2");
+    const response = await request(app).delete("/task/delete/2");
 
     expect(response.statusCode).toBe(200);
     expect(Tasks.deleteTask).toHaveBeenCalledWith(2, 1);

@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script src="/delete-task-button.js" defer></script>
+  </head>
+  <body>
+    <p>Realy want to Delete the Task?</p>
+    <a href="/?projectId=<%=projectId%>&taskId=<%=taskId%>">No</a>
+    <button data-task-id="<%=taskId%>" data-project-id="<%=projectId%>">
+      Yes
+    </button>
+  </body>
+</html>
