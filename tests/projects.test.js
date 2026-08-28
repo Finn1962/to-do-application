@@ -15,7 +15,11 @@ jest.mock("express-session", () => {
 jest.mock("../src/db/queries.js", () => ({
   Projects: {
     createProject: jest.fn(),
-    getProjectByProjectId: jest.fn(),
+    getProjectByProjectId: jest.fn().mockResolvedValue({
+      id: 2,
+      title: "test-project",
+      userId: 1,
+    }),
     editProject: jest.fn(),
     deleteTask: jest.fn(),
   },
@@ -41,7 +45,7 @@ describe("/login", () => {
   });
 
   it("should open edit project form", async () => {
-    const response = await request(app).get("/project/edit?projectId=2");
+    const response = await request(app).get("/project/edit/2");
 
     expect(response.statusCode).toBe(200);
     expect(Projects.getProjectByProjectId).toHaveBeenCalledWith(2, 1);
@@ -53,7 +57,7 @@ describe("/login", () => {
       title: "edited-test-task",
     });
 
-    expect(response.statusCode).toBe(302);
+    expect(response.statusCode).toBe(200);
     expect(Projects.editProject).toHaveBeenCalledWith({
       projectId: 2,
       title: "edited-test-task",
@@ -62,13 +66,13 @@ describe("/login", () => {
   });
 
   it("should show delete form", async () => {
-    const response = await request(app).get("/project/delete?projectId=2");
+    const response = await request(app).get("/project/delete/2");
 
     expect(response.statusCode).toBe(200);
   });
 
   it("should delete project", async () => {
-    const response = await request(app).delete("/project/delete?projectId=2");
+    const response = await request(app).delete("/project/delete/2");
 
     expect(response.statusCode).toBe(200);
     expect(Projects.deleteTask).toHaveBeenCalledWith(2, 1);

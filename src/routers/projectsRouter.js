@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { body, query, matchedData, param } = require("express-validator");
+const { body, matchedData, param } = require("express-validator");
 
 const projectsRouter = express.Router();
 
@@ -41,9 +41,9 @@ projectsRouter.post(
 );
 
 projectsRouter.get(
-  "/edit",
+  "/edit/:projectId",
 
-  [query("projectId").isInt({ min: 1 }).toInt()],
+  [param("projectId").isInt({ min: 1 }).toInt()],
 
   validateInputs,
 
@@ -53,8 +53,7 @@ projectsRouter.get(
       projectId,
       req.session.user.id,
     );
-
-    res.send(taskData);
+    res.render("editProjectForm", { taskData, projectId });
   },
 );
 
@@ -77,7 +76,7 @@ projectsRouter.put(
       userId: req.session.user.id,
     });
 
-    res.redirect("/");
+    res.status(200).end();
   },
 );
 

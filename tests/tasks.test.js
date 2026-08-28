@@ -57,7 +57,7 @@ describe("/login", () => {
       completed: false,
       created_at: "2026-08-25 15:18:10.112451",
     });
-    const response = await request(app).get("/task/edit?taskId=2");
+    const response = await request(app).get("/task/edit/2");
     expect(Tasks.getTaskByTaskId).toHaveBeenCalledWith(2, 1);
     expect(response.statusCode).toBe(200);
   });
@@ -75,8 +75,7 @@ describe("/login", () => {
       description: "i edited this task",
       userId: 1,
     });
-    expect(response.statusCode).toBe(302);
-    expect(response.headers.location).toBe("/");
+    expect(response.statusCode).toBe(200);
   });
 
   it("should set task on complete", async () => {

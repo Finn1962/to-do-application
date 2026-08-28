@@ -4,10 +4,10 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <script src="/edit-task-form.js" defer></script>
+    <script src="/edit-project-form.js" defer></script>
   </head>
   <body>
-    <form action="/task/edit" method="POST">
+    <form action="/project/edit" method="POST">
       <label for="title">Title</label>
       <input
         type="text"
@@ -16,17 +16,8 @@
         value="<%=taskData.title%>"
         required
       />
-      <label for="description">description</label>
-      <input
-        type="text"
-        name="description"
-        id="description"
-        value="<%=taskData.description%>"
-        required
-      />
-      <input type="hidden" name="taskId" value="<%=taskId%>" required />
       <input type="hidden" name="projectId" value="<%=projectId%>" required />
-      <a href="/?projectId=<%=projectId%>&taskId=<%=taskId%>">Back</a>
+      <a href="/?projectId=<%=projectId%>">Back</a>
       <button type="submit">Confirm Changes</button>
     </form>
   </body>
