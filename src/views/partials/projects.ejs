@@ -1,0 +1,39 @@
+<ul class="nav nav-pills flex-column mb-auto">
+  <% projects.forEach((project)=>{ %>
+  <%if (project.id === selectedProject.id) {%>
+  <li class="nav-item">
+    <div
+      class="nav-link cursor-pointer active d-flex justify-content-between"
+      aria-current="page"
+    >
+      <p class="m-0"><%=project.title%></p>
+      <div class="d-flex gap-3">
+        <a
+          href="/project/edit/<%=selectedProject?.id%>"
+          class="d-flex justify-content-center align-items-center bg-transparent border-0 p-0"
+        >
+          <img src="/pencil-square.svg" class="invert-image" />
+        </a>
+        <%if (projects.length > 1) {%>
+        <a
+          href="/project/delete/<%=selectedProject?.id%>"
+          class="d-flex justify-content-center align-items-center bg-transparent border-0 p-0"
+        >
+          <img src="/trash.svg" class="invert-image" />
+        </a>
+        <%}%>
+      </div>
+    </div>
+  </li>
+  <%} else {%>
+  <li>
+    <a
+      href="<%=`/?projectId=${project.id}`%>"
+      class="nav-link link-body-emphasis"
+    >
+      <%=project.title%>
+    </a>
+  </li>
+  <%}%>
+  <% }); %>
+</ul>
