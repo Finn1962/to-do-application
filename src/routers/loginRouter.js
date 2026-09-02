@@ -20,6 +20,9 @@ loginRouter.post(
 
     const userData = await Users.getUserDataByUsername(req.body.username);
 
+    if (!userData)
+      return res.render("login", { error: "Invalid username or password." });
+
     const isMatch = await comparePassword(
       req.body.password,
       userData.password_hash,
@@ -30,9 +33,10 @@ loginRouter.post(
         name: userData.username,
         id: userData.id,
       };
-      return res.redirect("/");
+      res.redirect("/");
+    } else {
+      res.render("login", { error: "Invalid username or password." });
     }
-    return res.status(401).end();
   },
 );
 

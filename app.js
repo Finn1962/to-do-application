@@ -20,6 +20,8 @@ const { projectsRouter } = require("./src/routers/projectsRouter.js");
 
 const { tasksRouter } = require("./src/routers/tasksRouter.js");
 
+const { logoutRouter } = require("./src/routers/logoutRouter.js");
+
 app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "./src/views"));
@@ -42,6 +44,8 @@ app.use(
 app.use("/login", loginRouter);
 
 app.use("/register", registerRouter);
+
+app.use("/logout", logoutRouter);
 
 app.use("/project", validateLogin, projectsRouter);
 
