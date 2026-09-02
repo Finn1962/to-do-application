@@ -4,10 +4,12 @@
   "scripts": {
     "pretest": "clear",
     "test": "jest",
-    "start": "node --watch server.js"
+    "start": "node --watch server.js",
+    "sass:watch": "sass --watch scss:css"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "bootstrap": "^5.3.8",
     "dompurify": "^3.4.14",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
@@ -25,6 +27,7 @@
     "jest": "^30.4.2",
     "prettier": "^3.9.6",
     "prettier-plugin-ejs": "^1.0.3",
+    "sass": "^1.103.1",
     "supertest": "^7.2.2"
   },
   "allowScripts": {
@@ -34,6 +37,8 @@
     "eslint-plugin-ejs@0.0.2": true,
     "pg@8.23.0": true,
     "prettier-plugin-ejs@1.0.3": true,
-    "@ckeditor/ckeditor5-build-classic@41.4.2": true
+    "@ckeditor/ckeditor5-build-classic@41.4.2": true,
+    "sass@1.103.1": true,
+    "bootstrap@5.3.8": true
   }
 }

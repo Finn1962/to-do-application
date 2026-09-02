@@ -1,3 +1,7 @@
+body {
+  overflow-x: hidden;
+}
+
 .invert-image {
   filter: invert(1);
 }
@@ -11,9 +15,9 @@
 }
 
 .ui-checkbox {
-  --primary-color: #1677ff;
+  --primary-color: #7584f1;
   --secondary-color: #fff;
-  --primary-hover-color: #4096ff;
+  --primary-hover-color: #8c97ec;
   /* checkbox */
   --checkbox-diameter: 20px;
   --checkbox-border-radius: 5px;
