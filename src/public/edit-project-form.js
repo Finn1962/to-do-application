@@ -1,9 +1,9 @@
-const form = document.querySelector("form");
+const editForm = document.querySelector("form");
 
-form.addEventListener("submit", (event) => {
+editForm.addEventListener("submit", (event) => {
   event.preventDefault();
 
-  const formData = new FormData(form);
+  const formData = new FormData(editForm);
   const data = Object.fromEntries(formData.entries());
 
   fetch("/project/edit", {

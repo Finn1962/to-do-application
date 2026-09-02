@@ -6,6 +6,10 @@
   cursor: pointer !important;
 }
 
+.ql-editor p {
+  margin-bottom: 0.5rem; /* Standard ist meist größer */
+}
+
 .ui-checkbox {
   --primary-color: #1677ff;
   --secondary-color: #fff;

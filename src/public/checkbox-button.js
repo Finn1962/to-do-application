@@ -1,6 +1,6 @@
 const checkboxButtons = document.querySelector(".ui-checkbox");
 
-checkboxButtons.addEventListener("click", () => {
+checkboxButtons?.addEventListener("click", () => {
   fetch("/task/complete", {
     method: "PATCH",
     headers: {

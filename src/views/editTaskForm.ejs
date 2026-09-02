@@ -4,6 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css"
+      rel="stylesheet"
+    />
+    <script src="/quill-editor.js" defer></script>
     <script src="/edit-task-form.js" defer></script>
   </head>
   <body>
@@ -16,18 +21,13 @@
         value="<%=taskData.title%>"
         required
       />
-      <label for="description">description</label>
-      <input
-        type="text"
-        name="description"
-        id="description"
-        value="<%=taskData.description%>"
-        required
-      />
+      <div id="editor"><%-taskData.description%></div>
+      <input type="hidden" name="description" id="description" required />
       <input type="hidden" name="taskId" value="<%=taskId%>" required />
       <input type="hidden" name="projectId" value="<%=projectId%>" required />
       <a href="/?projectId=<%=projectId%>&taskId=<%=taskId%>">Back</a>
       <button type="submit">Confirm Changes</button>
     </form>
+    <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
   </body>
 </html>

@@ -8,11 +8,13 @@
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",
+    "dompurify": "^3.4.14",
     "dotenv": "^17.4.2",
     "ejs": "^6.0.1",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "express-validator": "^7.3.2",
+    "jsdom": "^30.0.1",
     "pg": "^8.23.0"
   },
   "devDependencies": {
@@ -31,6 +33,7 @@
     "eslint@10.8.1": true,
     "eslint-plugin-ejs@0.0.2": true,
     "pg@8.23.0": true,
-    "prettier-plugin-ejs@1.0.3": true
+    "prettier-plugin-ejs@1.0.3": true,
+    "@ckeditor/ckeditor5-build-classic@41.4.2": true
   }
 }

@@ -9,7 +9,11 @@
   <body>
     <p>Realy want to Delete the Task?</p>
     <a href="/?projectId=<%=projectId%>&taskId=<%=taskId%>">No</a>
-    <button data-task-id="<%=taskId%>" data-project-id="<%=projectId%>">
+    <button
+      id="delete_task_button"
+      data-task-id="<%=taskId%>"
+      data-project-id="<%=projectId%>"
+    >
       Yes
     </button>
   </body>

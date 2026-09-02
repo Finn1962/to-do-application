@@ -22,6 +22,14 @@ jest.mock("../src/db/queries.js", () => ({
   },
 }));
 
+jest.mock("require", {
+  JSDOM: jest.fn().mockImplementation(() => {
+    return {
+      window: {},
+    };
+  }),
+});
+
 describe("/login", () => {
   beforeEach(() => {
     jest.clearAllMocks();

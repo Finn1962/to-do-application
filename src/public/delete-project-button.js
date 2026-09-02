@@ -1,4 +1,4 @@
-const deleteButton = document.querySelector("[data-project-id]");
+const deleteButton = document.querySelector("#delete_project_button");
 
 deleteButton.addEventListener("click", async () => {
   fetch(`/project/delete/${deleteButton.dataset.projectId}`, {
