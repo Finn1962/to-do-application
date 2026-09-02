@@ -14,9 +14,8 @@ loginRouter.post(
   "/",
 
   async (req, res) => {
-    if (!req.body.username || !req.body.password) {
-      return res.status(401).end();
-    }
+    if (!req.body.username || !req.body.password)
+      return res.render("login", { error: "Invalid username or password." });
 
     const userData = await Users.getUserDataByUsername(req.body.username);
 
