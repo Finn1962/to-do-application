@@ -22,13 +22,9 @@ jest.mock("../src/db/queries.js", () => ({
   },
 }));
 
-jest.mock("require", {
-  JSDOM: jest.fn().mockImplementation(() => {
-    return {
-      window: {},
-    };
-  }),
-});
+jest.mock("../src/utils/sanitizer.js", () => ({
+  sanitizeHtml: jest.fn((input) => input),
+}));
 
 describe("/login", () => {
   beforeEach(() => {

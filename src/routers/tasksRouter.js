@@ -8,11 +8,7 @@ const { Tasks } = require("../db/queries.js");
 
 const { validateInputs } = require("../middlewares/validationInputs.js");
 
-const createDOMPurify = require("dompurify");
-const { JSDOM } = require("jsdom");
-
-const window = new JSDOM("").window;
-const DOMPurify = createDOMPurify(window);
+const { sanitizeHtml } = require("../utils/sanitizer.js");
 
 tasksRouter.get(
   "/new/:projectId",
@@ -33,9 +29,7 @@ tasksRouter.post(
   [
     body("title").trim().notEmpty().escape(),
     body("projectId").isInt({ min: 1 }).toInt(),
-    body("description").customSanitizer((value) => {
-      return DOMPurify.sanitize(value);
-    }),
+    body("description").customSanitizer((value) => sanitizeHtml(value)),
   ],
 
   validateInputs,
@@ -78,11 +72,7 @@ tasksRouter.put(
     body("taskId").isInt({ min: 1 }).toInt(),
     body("projectId").optional().isInt({ min: 1 }).toInt(),
     body("title").trim().notEmpty().escape(),
-    body("description")
-      .trim()
-      .customSanitizer((value) => {
-        return DOMPurify.sanitize(value);
-      }),
+    body("description").customSanitizer((value) => sanitizeHtml(value)),
   ],
 
   validateInputs,
