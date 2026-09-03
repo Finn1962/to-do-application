@@ -1,8 +1,12 @@
 const express = require("express");
 
-const { body, validationResult } = require("express-validator");
+const { body, matchedData, query } = require("express-validator");
 
 const { hashPassword } = require("../middlewares/hash.js");
+
+const { sendVerificationMail } = require("../services/mailer.js");
+
+const { validateInputs } = require("../middlewares/validationInputs.js");
 
 const { Users } = require("../db/queries.js");
 
@@ -28,36 +32,60 @@ registerRouter.post(
     }),
   ],
 
-  (req, res, next) => {
-    const errors = validationResult(req);
-    if (!errors.isEmpty())
-      return res.render("register", {
-        error: "Could not create an account. Please notify the operator.",
-      });
-    else next();
-  },
+  validateInputs,
 
   async (req, res) => {
+    const data = matchedData(req);
+
     try {
-      const verification_token = await Users.createUser({
-        name: req.body.username,
-        email: req.body.email,
-        password: await hashPassword(req.body.password),
+      const { verification_token, id: userId } = await Users.createUser({
+        name: data.username,
+        email: data.email,
+        password: await hashPassword(data.password),
       });
-      res.render("verificationScreen", {});
+
+      sendVerificationMail({
+        username: data.username,
+        email: data.email,
+        verificationToken: verification_token,
+      });
+
+      res.render("verificationScreen", { userId });
     } catch (error) {
       console.error(error);
       if (error.code === "23505" && error.constraint === "users_username_key")
         res.render("register", {
           error: "Username is already taken.",
-          data: { username: req.body.username, email: req.body.email },
+          data: { username: data.username, email: data.email },
         });
       if (error.code === "23505" && error.constraint === "users_email_key")
         res.render("register", {
           error: "Email is already taken.",
-          data: { username: req.body.username, email: req.body.email },
+          data: { username: data.username, email: data.email },
         });
     }
+  },
+);
+
+registerRouter.get(
+  "/verification",
+
+  [
+    query("verificationToken").isInt({ min: 1 }).toInt(),
+    query("userId").isInt({ min: 1 }).toInt(),
+  ],
+
+  validateInputs,
+
+  async (req, res) => {
+    const { verificationToken, userId } = matchedData(req);
+    const success = await Users.activateUserAccount(verificationToken, userId);
+    if (success) res.redirect("/login");
+    else
+      res.render("verificationScreen", {
+        userId,
+        error: "The verification code is incorrect.",
+      });
   },
 );
 

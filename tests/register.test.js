@@ -5,9 +5,16 @@ const { Users } = require("../src/db/queries.js");
 
 jest.mock("../src/db/queries.js", () => ({
   Users: {
-    createUser: jest.fn(),
+    createUser: jest
+      .fn()
+      .mockResolvedValue({ verification_token: 123456, id: 1 }),
     getUserDataByUsername: jest.fn(),
+    activateUserAccount: jest.fn().mockResolvedValue(true),
   },
+}));
+
+jest.mock("../src/services/mailer.js", () => ({
+  sendVerificationMail: jest.fn(),
 }));
 
 describe("/register", () => {
@@ -34,5 +41,15 @@ describe("/register", () => {
       email: "test@example.com",
       password: expect.any(String),
     });
+  });
+
+  test("should verify user", async () => {
+    const response = await request(app).post(
+      "/register/verification/?verificationToken=123456&userId=1",
+    );
+
+    expect(response.status).toBe(302);
+    expect(response.headers.location).toBe("/login");
+    expect(Users.activateUserAccount).toHaveBeenCalledWith(123456, 1);
   });
 });

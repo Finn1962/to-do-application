@@ -17,6 +17,7 @@
     "express-session": "^1.19.0",
     "express-validator": "^7.3.2",
     "jsdom": "^30.0.1",
+    "nodemailer": "^9.1.1",
     "pg": "^8.23.0"
   },
   "devDependencies": {
@@ -39,6 +40,7 @@
     "prettier-plugin-ejs@1.0.3": true,
     "@ckeditor/ckeditor5-build-classic@41.4.2": true,
     "sass@1.103.1": true,
-    "bootstrap@5.3.8": true
+    "bootstrap@5.3.8": true,
+    "nodemailer@9.1.1": true
   }
 }

@@ -11,13 +11,28 @@ class Users {
     try {
       const result = await pool.query(
         `INSERT INTO users (username, email, password_hash) 
-        VALUES ($1, $2, $3) RETURNING verification_token`,
+        VALUES ($1, $2, $3) RETURNING verification_token, id`,
         [name, email, password],
       );
-      return result.rows[0].verification_token;
+      return result.rows[0];
     } catch (error) {
       console.error(error);
       throw error;
+    }
+  }
+
+  static async activateUserAccount(verificationToken, userId) {
+    try {
+      const { rowCount } = await pool.query(
+        `UPDATE users SET is_verified = $1 
+        WHERE id = $2 AND verification_token = $3 RETURNING *`,
+        [true, userId, verificationToken],
+      );
+      if (rowCount === 0) return false;
+      return true;
+    } catch (error) {
+      console.error(error);
+      return false;
     }
   }
 

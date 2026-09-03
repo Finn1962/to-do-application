@@ -22,6 +22,9 @@ loginRouter.post(
     if (!userData)
       return res.render("login", { error: "Invalid username or password." });
 
+    if (userData.is_verified === false)
+      return res.render("verificationScreen", { userId: userData.id });
+
     const isMatch = await comparePassword(
       req.body.password,
       userData.password_hash,
