@@ -4,17 +4,32 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
+    <link rel="stylesheet" href="/custom.css" />
+    <link rel="stylesheet" href="/css/bootstrap-custom.css" />
     <script src="/delete-task-button.js" defer></script>
   </head>
-  <body>
-    <p>Realy want to Delete the Task?</p>
-    <a href="/?projectId=<%=projectId%>&taskId=<%=taskId%>">No</a>
-    <button
-      id="delete_task_button"
-      data-task-id="<%=taskId%>"
-      data-project-id="<%=projectId%>"
-    >
-      Yes
-    </button>
+  <body
+    class="d-flex justify-content-center align-items-center flex-column vh-100 vw-100"
+  >
+    <main class="form-signin m-auto" style="min-width: 350px">
+      <h1 class="h3 mb-3 fw-normal text-body-secondary">
+        Do you really want to delete?
+      </h1>
+      <button
+        id="delete_task_button"
+        class="btn btn-primary w-100 py-2 mt-3 text-white mb-4"
+        data-task-id="<%=taskId%>"
+        data-project-id="<%=projectId%>"
+      >
+        Delete
+      </button>
+      <a href="/" class="text-decoration-none">← Back</a>
+    </main>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
