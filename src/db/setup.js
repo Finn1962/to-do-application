@@ -11,10 +11,21 @@ async function createTables() {
     await client.connect();
 
     await client.query(`
+      CREATE OR REPLACE FUNCTION generate_six_digit_code()
+      RETURNS TEXT AS $$
+      BEGIN
+          RETURN FLOOR(RANDOM() * 900000 + 100000)::TEXT;
+      END;
+      $$ LANGUAGE plpgsql VOLATILE;
+
       CREATE TABLE IF NOT EXISTS users (
         id SERIAL PRIMARY KEY,
-        username VARCHAR(255) NOT NULL,
-        password_hash TEXT NOT NULL
+        username VARCHAR(255) NOT NULL UNIQUE,
+        email VARCHAR(255) NOT NULL UNIQUE,
+        password_hash TEXT NOT NULL,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        is_verified BOOLEAN DEFAULT FALSE,
+        verification_token VARCHAR(6) DEFAULT generate_six_digit_code()
       );
 
       CREATE TABLE IF NOT EXISTS projects (

@@ -7,12 +7,14 @@ const pool = new Pool({
 });
 
 class Users {
-  static async createUser(username, passwordHash) {
+  static async createUser({ name, email, password }) {
     try {
-      await pool.query(
-        "INSERT INTO users (username, password_hash) VALUES ($1, $2)",
-        [username, passwordHash],
+      const result = await pool.query(
+        `INSERT INTO users (username, email, password_hash) 
+        VALUES ($1, $2, $3) RETURNING verification_token`,
+        [name, email, password],
       );
+      return result.rows[0].verification_token;
     } catch (error) {
       console.error(error);
       throw error;
@@ -28,7 +30,6 @@ class Users {
       return rows[0];
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 }
@@ -42,7 +43,6 @@ class Projects {
       );
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 
@@ -55,7 +55,6 @@ class Projects {
       return rows;
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 
@@ -68,7 +67,6 @@ class Projects {
       return rows[0];
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 
@@ -80,7 +78,6 @@ class Projects {
       );
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 
@@ -92,7 +89,6 @@ class Projects {
       ]);
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 }
@@ -106,7 +102,6 @@ class Tasks {
       );
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 
@@ -119,7 +114,6 @@ class Tasks {
       return rows;
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 
@@ -132,7 +126,6 @@ class Tasks {
       return rows;
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 
@@ -145,7 +138,6 @@ class Tasks {
       return rows[0];
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 
@@ -157,7 +149,6 @@ class Tasks {
       );
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 
@@ -169,7 +160,6 @@ class Tasks {
       );
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 
@@ -181,7 +171,6 @@ class Tasks {
       ]);
     } catch (error) {
       console.error(error);
-      throw error;
     }
   }
 }

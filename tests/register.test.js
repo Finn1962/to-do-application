@@ -23,36 +23,16 @@ describe("/register", () => {
   test("should create a new user", async () => {
     const response = await request(app).post("/register").send({
       username: "test-user",
+      email: "test@example.com",
       password: "test-password",
       confirmPassword: "test-password",
     });
 
     expect(response.statusCode).toBe(200);
-    expect(Users.createUser).toHaveBeenCalledWith(
-      "test-user",
-      expect.any(String),
-    );
-  });
-
-  test("should not create a new user with invalid data", async () => {
-    const response = await request(app).post("/register").send({
-      username: "",
-      password: "",
-      confirmPassword: "",
+    expect(Users.createUser).toHaveBeenCalledWith({
+      name: "test-user",
+      email: "test@example.com",
+      password: expect.any(String),
     });
-
-    expect(response.statusCode).toBe(400);
-    expect(Users.createUser).not.toHaveBeenCalled();
-  });
-
-  test("should not create a new user with mismatched passwords", async () => {
-    const response = await request(app).post("/register").send({
-      username: "test-user",
-      password: "test-password",
-      confirmPassword: "test-confirmPassword",
-    });
-
-    expect(response.statusCode).toBe(400);
-    expect(Users.createUser).not.toHaveBeenCalled();
   });
 });

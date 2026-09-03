@@ -7,16 +7,17 @@
     <link rel="icon" type="image/png" href="/favicon.svg" />
     <link rel="stylesheet" href="/custom.css" />
     <link rel="stylesheet" href="/css/bootstrap-custom.css" />
+    <script src="/password-validation.js" defer></script>
   </head>
   <body
     class="d-flex justify-content-center align-items-center flex-column vh-100 vw-100"
   >
     <main class="form-signin m-auto" style="min-width: 350px">
-      <form action="/login" method="POST">
+      <form action="/register" method="POST">
         <div class="d-flex justify-content-start align-items-center">
           <img class="mb-4" src="/logo.svg" alt="" height="60" />
         </div>
-        <h1 class="h3 mb-3 fw-normal text-body-secondary">Please sign in</h1>
+        <h1 class="h3 mb-3 fw-normal text-body-secondary">Please sign up</h1>
         <div class="form-floating">
           <input
             type="text"
@@ -24,9 +25,35 @@
             id="floatingInput"
             placeholder="name@example.com"
             name="username"
+            value="<% if (typeof data !== 'undefined' && data.username) { %> <%= data.username %> <% } %>"
             required
           />
           <label for="floatingInput">Username</label>
+        </div>
+        <div class="form-floating">
+          <input
+            type="email"
+            class="form-control mb-2"
+            id="floatingInput"
+            placeholder="name@example.com"
+            value="<% if (typeof data !== 'undefined' && data.email) { %> <%= data.email %> <% } %>"
+            name="email"
+            required
+          />
+          <label for="floatingInput">Email</label>
+        </div>
+        <div class="form-floating">
+          <input
+            type="password"
+            class="form-control mb-2"
+            id="floatingPassword"
+            placeholder="Password"
+            name="password"
+            minlength="8"
+            maxlength="32"
+            required
+          />
+          <label for="floatingPassword">Password</label>
         </div>
         <div class="form-floating">
           <input
@@ -34,23 +61,25 @@
             class="form-control"
             id="floatingPassword"
             placeholder="Password"
-            name="password"
+            name="confirmPassword"
+            minlength="8"
+            maxlength="32"
             required
           />
-          <label for="floatingPassword">Password</label>
+          <label for="floatingPassword">Confirm Password</label>
         </div>
         <button
           class="btn btn-primary w-100 py-2 mt-3 text-white"
           type="submit"
         >
-          Log in
+          Create Account
         </button>
       </form>
       <p class="text-danger mt-1">
         <% if (typeof error !== 'undefined') { %> <%= error %> <% } %>
       </p>
-      <p class="mb-0 mt-4 text-body-secondary">Don't have an account yet?</p>
-      <a href="/register" class="text-decoration-none"> Sign up </a>
+      <p class="mb-0 mt-4 text-body-secondary">You already have an account?</p>
+      <a href="/login" class="text-decoration-none">Log in</a>
       <p class="mt-5 mb-3 text-body-secondary">© 2026 By Finn Schmidt</p>
     </main>
 
