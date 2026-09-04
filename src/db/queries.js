@@ -47,6 +47,18 @@ class Users {
       console.error(error);
     }
   }
+
+  static async getUserDataByEmail(email) {
+    try {
+      const { rows } = await pool.query(
+        "SELECT * FROM users WHERE email = $1",
+        [email],
+      );
+      return rows[0];
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 class Projects {

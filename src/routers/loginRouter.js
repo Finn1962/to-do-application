@@ -14,13 +14,15 @@ loginRouter.post(
   "/",
 
   async (req, res) => {
-    if (!req.body.username || !req.body.password)
-      return res.render("login", { error: "Invalid username or password." });
+    if (!req.body.usernameOrEmail || !req.body.password)
+      return res.render("login", { error: "Invalid login details." });
 
-    const userData = await Users.getUserDataByUsername(req.body.username);
+    const userData =
+      (await Users.getUserDataByUsername(req.body.usernameOrEmail)) ||
+      (await Users.getUserDataByEmail(req.body.usernameOrEmail));
 
     if (!userData)
-      return res.render("login", { error: "Invalid username or password." });
+      return res.render("login", { error: "Invalid login details." });
 
     if (userData.is_verified === false)
       return res.render("verificationScreen", { userId: userData.id });
@@ -37,7 +39,7 @@ loginRouter.post(
       };
       res.redirect("/");
     } else {
-      res.render("login", { error: "Invalid username or password." });
+      res.render("login", { error: "Invalid login details." });
     }
   },
 );
