@@ -8,6 +8,8 @@ const session = require("express-session");
 
 const app = express();
 
+const { accountsCleanup } = require("./src/utils/accountsCleanup.js");
+
 const { validateLogin } = require("./src/middlewares/validationLogin.js");
 
 const { homeRouter } = require("./src/routers/homeRouter.js");
@@ -40,6 +42,8 @@ app.use(
     cookie: { secure: process.env.NODE_ENV === "production" },
   }),
 );
+
+accountsCleanup();
 
 app.use("/login", loginRouter);
 

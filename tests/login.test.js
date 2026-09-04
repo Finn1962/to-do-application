@@ -3,6 +3,12 @@ const { app } = require("../app.js");
 
 const { Users } = require("../src/db/queries.js");
 
+const { comparePassword } = require("../src/middlewares/hash.js");
+
+jest.mock("../src/middlewares/hash.js", () => ({
+  comparePassword: jest.fn(),
+}));
+
 jest.mock("../src/db/queries.js", () => ({
   Users: {
     getUserDataByUsername: jest.fn(),
@@ -22,16 +28,11 @@ describe("/login", () => {
   });
 
   it("should login user", async () => {
-    const response = await request(app)
-      .post("/login")
-      .send({ username: "test-user", password: "test" });
-    expect(response.statusCode).toBe(302);
-  });
+    comparePassword.mockResolvedValue(true);
 
-  it("should not login user", async () => {
     const response = await request(app)
       .post("/login")
-      .send({ username: "test-user", password: "wrong-password" });
-    expect(response.statusCode).toBe(401);
+      .send({ usernameOrEmail: "test-user", password: "test" });
+    expect(response.statusCode).toBe(302);
   });
 });

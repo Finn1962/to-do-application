@@ -9,12 +9,16 @@ jest.mock("../src/db/queries.js", () => ({
       .fn()
       .mockResolvedValue({ verification_token: 123456, id: 1 }),
     getUserDataByUsername: jest.fn(),
-    activateUserAccount: jest.fn().mockResolvedValue(true),
+    activateUserAccount: jest.fn(),
   },
 }));
 
 jest.mock("../src/services/mailer.js", () => ({
   sendVerificationMail: jest.fn(),
+}));
+
+jest.mock("../src/utils/sampleProjects.js", () => ({
+  addSampleProject: jest.fn(),
 }));
 
 describe("/register", () => {
@@ -44,7 +48,9 @@ describe("/register", () => {
   });
 
   test("should verify user", async () => {
-    const response = await request(app).post(
+    Users.activateUserAccount.mockResolvedValue(true);
+
+    const response = await request(app).get(
       "/register/verification/?verificationToken=123456&userId=1",
     );
 

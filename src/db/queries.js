@@ -59,6 +59,16 @@ class Users {
       console.error(error);
     }
   }
+
+  static async deleteUnveriviedAccounts() {
+    try {
+      await pool.query(`
+        DELETE FROM users
+        WHERE created_at < NOW() - INTERVAL '10 minutes'`);
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 class Projects {
@@ -211,4 +221,4 @@ class Tasks {
   description: "test-description",
 }).then((id) => console.log(id));
 */
-module.exports = { Users, Projects, Tasks };
+module.exports = { Users, Projects, Tasks, pool };
