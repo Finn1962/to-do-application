@@ -24,6 +24,8 @@ const { tasksRouter } = require("./src/routers/tasksRouter.js");
 
 const { logoutRouter } = require("./src/routers/logoutRouter.js");
 
+const { settingsRouter } = require("./src/routers/settingsRouter.js");
+
 app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "./src/views"));
@@ -54,6 +56,8 @@ app.use("/logout", logoutRouter);
 app.use("/project", validateLogin, projectsRouter);
 
 app.use("/task", validateLogin, tasksRouter);
+
+app.use("/settings", validateLogin, settingsRouter);
 
 app.use("/", validateLogin, homeRouter);
 

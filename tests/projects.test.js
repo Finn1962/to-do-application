@@ -12,6 +12,10 @@ jest.mock("express-session", () => {
   };
 });
 
+jest.mock("../src/utils/accountsCleanup.js", () => ({
+  accountsCleanup: jest.fn(),
+}));
+
 jest.mock("../src/db/queries.js", () => ({
   Projects: {
     createProject: jest.fn(),
