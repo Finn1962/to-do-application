@@ -9,12 +9,12 @@ const pool = new Pool({
 class Users {
   static async createUser({ name, email, password }) {
     try {
-      const result = await pool.query(
+      const { rows } = await pool.query(
         `INSERT INTO users (username, email, password_hash) 
         VALUES ($1, $2, $3) RETURNING verification_token, id`,
         [name, email, password],
       );
-      return result.rows[0];
+      return rows[0];
     } catch (error) {
       console.error(error);
       throw error;
@@ -52,10 +52,11 @@ class Users {
 class Projects {
   static async createProject(title, userId) {
     try {
-      await pool.query(
-        "INSERT INTO projects (user_id, title) VALUES ($1, $2)",
+      const { rows } = await pool.query(
+        "INSERT INTO projects (user_id, title) VALUES ($1, $2) RETURNING id",
         [userId, title],
       );
+      return rows[0].id;
     } catch (error) {
       console.error(error);
     }
@@ -111,10 +112,11 @@ class Projects {
 class Tasks {
   static async createTask({ userId, projectId, title, description }) {
     try {
-      await pool.query(
-        "INSERT INTO tasks (user_id, project_id, title, description) VALUES ($1, $2, $3, $4)",
+      const { rows } = await pool.query(
+        "INSERT INTO tasks (user_id, project_id, title, description) VALUES ($1, $2, $3, $4) RETURNING id",
         [userId, projectId, title, description],
       );
+      return rows[0].id;
     } catch (error) {
       console.error(error);
     }
@@ -190,4 +192,11 @@ class Tasks {
   }
 }
 
+/*Tasks.createTask({
+  userId: 35,
+  projectId: 5,
+  title: "test-task",
+  description: "test-description",
+}).then((id) => console.log(id));
+*/
 module.exports = { Users, Projects, Tasks };

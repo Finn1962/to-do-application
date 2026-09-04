@@ -8,6 +8,8 @@ const { sendVerificationMail } = require("../services/mailer.js");
 
 const { validateInputs } = require("../middlewares/validationInputs.js");
 
+const { addSampleProject } = require("../utils/sampleProjects.js");
+
 const { Users } = require("../db/queries.js");
 
 const registerRouter = express.Router();
@@ -43,6 +45,8 @@ registerRouter.post(
         email: data.email,
         password: await hashPassword(data.password),
       });
+
+      addSampleProject(userId);
 
       sendVerificationMail({
         username: data.username,
