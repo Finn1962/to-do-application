@@ -6,7 +6,7 @@ const { query, matchedData } = require("express-validator");
 
 const { validateInputs } = require("../middlewares/validationInputs.js");
 
-const { Projects, Tasks } = require("../db/queries.js");
+const { Users, Projects, Tasks } = require("../db/queries.js");
 
 homeRouter.get(
   "/",
@@ -19,7 +19,10 @@ homeRouter.get(
   validateInputs,
 
   async (req, res) => {
-    const projects = await Projects.getAllProjectsByUserId(req.session.user.id);
+    const [userData, projects] = await Promise.all([
+      Users.getUserDataByUsername(req.session.user.name),
+      Projects.getAllProjectsByUserId(req.session.user.id),
+    ]);
 
     if (projects.length === 0)
       res.render("home", {
@@ -27,6 +30,7 @@ homeRouter.get(
         selectedProject: null,
         assignedTasks: [],
         selectedTask: null,
+        userData,
       });
 
     const { projectId, taskId } = matchedData(req);
@@ -50,6 +54,7 @@ homeRouter.get(
       selectedProject: selectedProject,
       assignedTasks: assignedTasks,
       selectedTask: selectedTask,
+      userData,
     });
   },
 );

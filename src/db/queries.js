@@ -80,7 +80,8 @@ class Users {
     try {
       await pool.query(`
         DELETE FROM users
-        WHERE created_at < NOW() - INTERVAL '10 minutes'`);
+        WHERE created_at < NOW() - INTERVAL '10 minutes' 
+        AND is_verified = false`);
     } catch (error) {
       console.error(error);
     }

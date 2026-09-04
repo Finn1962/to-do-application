@@ -53,14 +53,13 @@
               data-bs-toggle="dropdown"
               aria-expanded="false"
             >
-              <img
-                src="https://github.com/mdo.png"
-                alt=""
-                width="32"
-                height="32"
-                class="rounded-circle me-2"
-              />
-              <strong>mdo</strong>
+              <div
+                class="rounded-circle me-2 bg-primary d-flex justify-content-center align-items-center text-white fs-5 fw-medium"
+                style="height: 32px; width: 32px"
+              >
+                <%=userData.username[0]%>
+              </div>
+              <strong><%=userData.username%></strong>
             </a>
             <ul class="dropdown-menu text-small shadow">
               <li><a class="dropdown-item" href="#">Profile</a></li>
