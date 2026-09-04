@@ -54,7 +54,7 @@ registerRouter.post(
         verificationToken: verification_token,
       });
 
-      res.render("verificationScreen", { userId });
+      res.render("verificationForm", { userId });
     } catch (error) {
       console.error(error);
       if (error.code === "23505" && error.constraint === "users_username_key")
@@ -86,10 +86,33 @@ registerRouter.get(
     const success = await Users.activateUserAccount(verificationToken, userId);
     if (success) res.redirect("/login");
     else
-      res.render("verificationScreen", {
+      res.render("verificationForm", {
         userId,
         error: "The verification code is incorrect.",
       });
+  },
+);
+
+registerRouter.patch(
+  "/new-verification-token",
+
+  [body("userId").isInt({ min: 1 }).toInt()],
+
+  validateInputs,
+
+  async (req, res) => {
+    const { userId } = matchedData(req);
+
+    const { verification_token, email, username } =
+      await Users.generateNewVerificationToken(userId);
+
+    sendVerificationMail({
+      username: username,
+      email: email,
+      verificationToken: verification_token,
+    });
+
+    res.send(200).end();
   },
 );
 

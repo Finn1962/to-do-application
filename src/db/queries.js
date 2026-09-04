@@ -36,6 +36,22 @@ class Users {
     }
   }
 
+  static async generateNewVerificationToken(userId) {
+    try {
+      const { rows } = await pool.query(
+        `UPDATE users 
+        SET verification_token = generate_six_digit_code()
+        WHERE id = $1 
+        RETURNING verification_token, email, username`,
+        [userId],
+      );
+      return rows[0];
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   static async getUserDataByUsername(username) {
     try {
       const { rows } = await pool.query(

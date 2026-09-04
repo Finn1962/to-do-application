@@ -3,6 +3,10 @@ const { app } = require("../app.js");
 
 const { Users } = require("../src/db/queries.js");
 
+jest.mock("../src/utils/accountsCleanup.js", () => ({
+  accountsCleanup: jest.fn(),
+}));
+
 jest.mock("../src/db/queries.js", () => ({
   Users: {
     createUser: jest
@@ -10,6 +14,7 @@ jest.mock("../src/db/queries.js", () => ({
       .mockResolvedValue({ verification_token: 123456, id: 1 }),
     getUserDataByUsername: jest.fn(),
     activateUserAccount: jest.fn(),
+    generateNewVerificationToken: jest.fn(),
   },
 }));
 
@@ -57,5 +62,22 @@ describe("/register", () => {
     expect(response.status).toBe(302);
     expect(response.headers.location).toBe("/login");
     expect(Users.activateUserAccount).toHaveBeenCalledWith(123456, 1);
+  });
+
+  test("should genereate a new verification token", async () => {
+    Users.generateNewVerificationToken.mockResolvedValue({
+      verification_token: 234567,
+      email: "test@example.com",
+      username: "test-user",
+    });
+
+    const response = await request(app)
+      .patch("/register/new-verification-token")
+      .send({
+        userId: 1,
+      });
+
+    expect(Users.generateNewVerificationToken).toHaveBeenCalledWith(1);
+    expect(response.statusCode).toBe(200);
   });
 });
