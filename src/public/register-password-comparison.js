@@ -1,4 +1,5 @@
-const registerForm = document.querySelector("form");
+const passwordForm =
+  document.querySelector(".password-form") || document.querySelector("form");
 const passwordInput = document.querySelector("[name='password']");
 const confirmPasswordInput = document.querySelector("[name='confirmPassword']");
 
@@ -10,11 +11,13 @@ confirmPasswordInput.addEventListener("input", () => {
   confirmPasswordInput.setCustomValidity("");
 });
 
-registerForm.addEventListener("submit", (event) => {
+passwordForm.addEventListener("submit", (event) => {
   event.preventDefault();
   if (passwordInput.value !== confirmPasswordInput.value) {
     confirmPasswordInput.setCustomValidity("Passwords do not match.");
+    confirmPasswordInput.reportValidity();
+    return;
   } else {
-    registerForm.submit();
+    passwordForm.submit();
   }
 });

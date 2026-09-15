@@ -28,7 +28,7 @@ registerRouter.post(
     body("confirmPassword").notEmpty().isLength({ min: 8, max: 32 }),
     body("confirmPassword").custom((value, { req }) => {
       if (value !== req.body.password) {
-        throw new Error("Passwörter stimmen nicht überein");
+        throw new Error("passwords do not match");
       }
       return true;
     }),

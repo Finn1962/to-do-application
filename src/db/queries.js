@@ -86,6 +86,35 @@ class Users {
       console.error(error);
     }
   }
+
+  static async changePasswordHash(password_hash, userId) {
+    try {
+      await pool.query(
+        `
+       UPDATE users
+       SET password_hash = $1
+       WHERE id = $2`,
+        [password_hash, userId],
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  static async changeUserdata({ username, email, userId }) {
+    try {
+      await pool.query(
+        `
+        UPDATE users
+        SET username = $1, email = $2
+        WHERE id = $3
+       `,
+        [username, email, userId],
+      );
+    } catch (error) {
+      console.error(error);
+    }
+  }
 }
 
 class Projects {
@@ -231,11 +260,4 @@ class Tasks {
   }
 }
 
-/*Tasks.createTask({
-  userId: 35,
-  projectId: 5,
-  title: "test-task",
-  description: "test-description",
-}).then((id) => console.log(id));
-*/
 module.exports = { Users, Projects, Tasks, pool };

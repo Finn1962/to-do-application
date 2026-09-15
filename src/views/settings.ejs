@@ -4,9 +4,11 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Document</title>
-    <link rel="stylesheet" href="/custom.css" />
+    <link rel="stylesheet" href="/css/custom.css" />
     <link rel="stylesheet" href="/css/bootstrap-custom.css" />
     <script src="/settings-buttons.js" defer></script>
+    <script src="/change-userdata-form.js" defer></script>
+    <script src="/change-password-form.js" defer></script>
   </head>
   <body
     class="d-flex flex-column justify-content-start align-items-center flex-column vh-100 vw-100"
@@ -16,7 +18,7 @@
       <h1 class="h3 mb-3 mt-3 fw-normal text-body-secondary">Settings</h1>
       <p class="mb-1 text-secondary">Change password</p>
       <hr class="mb-4" />
-      <form action="/login" method="POST" class="mb-5 username-and-mail-form">
+      <form action="#" method="POST" class="mb-5 userdata-form">
         <div class="form-floating">
           <input
             type="text"
@@ -51,7 +53,7 @@
       </form>
       <p class="mb-1">Change password</p>
       <hr class="mb-4" />
-      <form action="/login" method="POST" class="mb-5 password password-form">
+      <form action="#" method="POST" class="mb-5 password password-form">
         <div class="form-floating">
           <input
             type="password"
@@ -59,7 +61,8 @@
             id="floatingPassword"
             placeholder="Password"
             name="password"
-            value="<%userData.email%>"
+            minlength="8"
+            maxlength="32"
             required
           />
           <label for="floatingPassword">New password</label>
@@ -71,6 +74,8 @@
             id="floatingPassword"
             placeholder="Password"
             name="confirmPassword"
+            minlength="8"
+            maxlength="32"
             required
           />
           <label for="floatingPassword">Confirm new password</label>
@@ -83,14 +88,6 @@
           Save
         </button>
       </form>
-      <p class="mb-1 text-danger">Danger zone!</p>
-      <hr class="mb-3" />
-      <button class="btn btn-danger w-100 py-2 text-white" type="submit">
-        Delete account
-      </button>
-      <p class="text-danger mt-1">
-        <% if (typeof error !== 'undefined') { %> <%= error %> <% } %>
-      </p>
       <p class="mt-5 mb-3 text-body-secondary">© 2026 By Finn Schmidt</p>
     </main>
 
