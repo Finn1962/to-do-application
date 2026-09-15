@@ -35,6 +35,7 @@ loginRouter.post(
     if (isMatch) {
       req.session.user = {
         name: userData.username,
+        email: userData.email,
         id: userData.id,
       };
       res.redirect("/");

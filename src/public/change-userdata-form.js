@@ -1,4 +1,4 @@
-const userdataForm = document.querySelector(".userdata-form");
+const userdataForm = document.querySelector(".username-form");
 
 userdataForm.addEventListener("submit", async (event) => {
   event.preventDefault();
@@ -7,7 +7,7 @@ userdataForm.addEventListener("submit", async (event) => {
   const data = Object.fromEntries(formData.entries());
 
   try {
-    await fetch("/settings/userdata", {
+    await fetch("/settings/username", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

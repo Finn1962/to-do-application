@@ -16,7 +16,7 @@ setInterval(() => {
 
 newVerificationButton.addEventListener("click", () => {
   if (counter === 0) {
-    fetch("/register/new-verification-token", {
+    fetch("/register/newVerificationToken", {
       method: "PATCH",
       headers: {
         "Content-Type": "application/json",

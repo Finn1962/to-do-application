@@ -15,11 +15,14 @@ jest.mock("../src/db/queries.js", () => ({
     getUserDataByUsername: jest.fn(),
     activateUserAccount: jest.fn(),
     generateNewVerificationToken: jest.fn(),
+    deleteVerificationToken: jest.fn(),
   },
 }));
 
 jest.mock("../src/services/mailer.js", () => ({
-  sendVerificationMail: jest.fn(),
+  Mails: {
+    sendVerification: jest.fn(),
+  },
 }));
 
 jest.mock("../src/utils/sampleProjects.js", () => ({
@@ -72,12 +75,16 @@ describe("/register", () => {
     });
 
     const response = await request(app)
-      .patch("/register/new-verification-token")
+      .patch("/register/newVerificationToken")
       .send({
         userId: 1,
       });
 
     expect(Users.generateNewVerificationToken).toHaveBeenCalledWith(1);
     expect(response.statusCode).toBe(200);
+  });
+
+  test("should open first form to reset password", async () => {
+    const response = await request(app).get("/register/resetPassword");
   });
 });

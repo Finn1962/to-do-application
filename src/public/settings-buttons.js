@@ -20,6 +20,6 @@ function setupFormState(formSelector) {
 }
 
 document.addEventListener("DOMContentLoaded", () => {
-  setupFormState(".userdata-form");
+  setupFormState(".username-form");
   setupFormState(".password-form");
 });

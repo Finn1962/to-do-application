@@ -16,6 +16,12 @@ jest.mock("../src/middlewares/hash.js", () => ({
   hashPassword: jest.fn().mockResolvedValue("password-hash"),
 }));
 
+jest.mock("../src/services/mailer.js", () => ({
+  Mails: {
+    sendPasswordChanged: jest.fn(),
+  },
+}));
+
 jest.mock("../src/db/queries.js", () => ({
   Users: {
     getUserDataByUsername: jest.fn().mockResolvedValue({
@@ -23,7 +29,7 @@ jest.mock("../src/db/queries.js", () => ({
       email: "test.mail@gmail.com",
     }),
     changePasswordHash: jest.fn(),
-    changeUserdata: jest.fn(),
+    changeUsername: jest.fn(),
   },
 }));
 
@@ -43,13 +49,11 @@ describe("GET /", () => {
   });
 
   test("should change userdata", async () => {
-    const response = await request(app).patch("/settings/userdata").send({
+    const response = await request(app).patch("/settings/username").send({
       username: "test-user",
-      email: "test.mail@test.com",
     });
-    expect(Users.changeUserdata).toHaveBeenCalledWith({
+    expect(Users.changeUsername).toHaveBeenCalledWith({
       username: "test-user",
-      email: "test.mail@test.com",
       userId: 1,
     });
     expect(response.statusCode).toBe(200);

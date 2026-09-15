@@ -52,6 +52,21 @@ class Users {
     }
   }
 
+  static async deleteVerificationToken(userId) {
+    try {
+      const { rows } = await pool.query(
+        `UPDATE users 
+        SET verification_token = NULL
+        WHERE id = $1 `,
+        [userId],
+      );
+      return rows[0];
+    } catch (error) {
+      console.error(error);
+      throw error;
+    }
+  }
+
   static async getUserDataByUsername(username) {
     try {
       const { rows } = await pool.query(
@@ -101,15 +116,15 @@ class Users {
     }
   }
 
-  static async changeUserdata({ username, email, userId }) {
+  static async changeUsername({ username, userId }) {
     try {
       await pool.query(
         `
         UPDATE users
-        SET username = $1, email = $2
-        WHERE id = $3
+        SET username = $1
+        WHERE id = $2
        `,
-        [username, email, userId],
+        [username, userId],
       );
     } catch (error) {
       console.error(error);

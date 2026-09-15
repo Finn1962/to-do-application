@@ -4,6 +4,8 @@ const settingsRouter = express.Router();
 
 const { Users } = require("../db/queries.js");
 
+const { Mails } = require("../services/mailer.js");
+
 const { hashPassword } = require("../middlewares/hash.js");
 
 const { body, matchedData } = require("express-validator");
@@ -16,20 +18,16 @@ settingsRouter.get("/", async (req, res) => {
 });
 
 settingsRouter.patch(
-  "/userdata",
+  "/username",
 
-  [
-    body("username").notEmpty(),
-    body("email").notEmpty().isEmail().trim().normalizeEmail(),
-  ],
+  [body("username").notEmpty()],
 
   validateInputs,
 
   async (req, res) => {
-    const { username, email } = matchedData(req);
-    Users.changeUserdata({
+    const { username } = matchedData(req);
+    Users.changeUsername({
       username: username,
-      email: email,
       userId: req.session.user.id,
     });
     req.session.user.name = username;
@@ -56,6 +54,10 @@ settingsRouter.patch(
   async (req, res) => {
     const { password } = matchedData(req);
     Users.changePasswordHash(await hashPassword(password), req.session.user.id);
+    Mails.sendPasswordChanged({
+      username: req.session.user.name,
+      email: req.session.user.email,
+    });
     res.status(200).end();
   },
 );

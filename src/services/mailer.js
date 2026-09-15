@@ -11,38 +11,38 @@ const mailTransporter = nodemailer.createTransport({
   },
 });
 
-function sendVerificationMail({ username, email, verificationToken }) {
-  const mailOptions = {
-    from: "the.focus.todo@gmail.com",
-    to: email,
-    subject: "Your verification code for FOCUS TO-DO",
-    html: `<p>Hello ${username},<br> 
+class Mails {
+  static sendVerification({ username, email, verificationToken }) {
+    const mailOptions = {
+      from: "the.focus.todo@gmail.com",
+      to: email,
+      subject: "Your verification code for FOCUS TO-DO",
+      html: `<p>Hello ${username},<br> 
         Welcome to Focus To-Do! <br> <br>
         Your verification code is: <br>
-        <strong>${verificationToken}</strong>`,
-  };
-  mailTransporter.sendMail(mailOptions, (error) => {
-    if (error) {
-      return console.error("Fehler beim Senden:", error);
-    }
-  });
+        <strong>${verificationToken}</strong><br><br>
+        Best regards,<br>
+        FOCUS TO-DO</p>`,
+    };
+    mailTransporter.sendMail(mailOptions, (error) => {
+      if (error) return console.error(error);
+    });
+  }
+
+  static sendPasswordChanged({ username, email }) {
+    const mailOptions = {
+      from: "the.focus.todo@gmail.com",
+      to: email,
+      subject: "Your FOCUS TO-Do password has Changed",
+      html: `<p>Hello ${username},<br> 
+         <br>Your password for Focus To-Do has been changed.<br><br>
+        Best regards,<br>
+        FOCUS TO-DO</p>`,
+    };
+    mailTransporter.sendMail(mailOptions, (error) => {
+      if (error) return console.error(error);
+    });
+  }
 }
 
-function sendPasswordChangedMail({ username, email, verificationToken }) {
-  const mailOptions = {
-    from: "the.focus.todo@gmail.com",
-    to: email,
-    subject: "Your FOCUS TO-Do password has Changed",
-    html: `<p>Hello ${username},<br> 
-        Welcome to Focus To-Do! <br> <br>
-        Your verification code is: <br>
-        <strong>${verificationToken}</strong>`,
-  };
-  mailTransporter.sendMail(mailOptions, (error) => {
-    if (error) {
-      return console.error("Fehler beim Senden:", error);
-    }
-  });
-}
-
-module.exports = { sendVerificationMail };
+module.exports = { Mails };

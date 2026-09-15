@@ -4,7 +4,7 @@ const { body, matchedData, query } = require("express-validator");
 
 const { hashPassword } = require("../middlewares/hash.js");
 
-const { sendVerificationMail } = require("../services/mailer.js");
+const { Mails } = require("../services/mailer.js");
 
 const { validateInputs } = require("../middlewares/validationInputs.js");
 
@@ -48,7 +48,7 @@ registerRouter.post(
 
       addSampleProject(userId);
 
-      sendVerificationMail({
+      Mails.sendVerification({
         username: data.username,
         email: data.email,
         verificationToken: verification_token,
@@ -84,17 +84,20 @@ registerRouter.get(
   async (req, res) => {
     const { verificationToken, userId } = matchedData(req);
     const success = await Users.activateUserAccount(verificationToken, userId);
-    if (success) res.redirect("/login");
-    else
+    if (success) {
+      Users.deleteVerificationToken(userId);
+      res.redirect("/login");
+    } else {
       res.render("verificationForm", {
         userId,
         error: "The verification code is incorrect.",
       });
+    }
   },
 );
 
 registerRouter.patch(
-  "/new-verification-token",
+  "/newVerificationToken",
 
   [body("userId").isInt({ min: 1 }).toInt()],
 
@@ -106,7 +109,7 @@ registerRouter.patch(
     const { verification_token, email, username } =
       await Users.generateNewVerificationToken(userId);
 
-    sendVerificationMail({
+    Mails.sendVerification({
       username: username,
       email: email,
       verificationToken: verification_token,
@@ -114,6 +117,16 @@ registerRouter.patch(
 
     res.send(200).end();
   },
+);
+
+registerRouter.get("/resetPassword", (req, res, next) => {
+  console.log("augelöst");
+  res.status(200).end();
+});
+
+registerRouter.get(
+  "/resetPassword/:userId/:verificationToken",
+  (req, res, next) => {},
 );
 
 module.exports = { registerRouter };
