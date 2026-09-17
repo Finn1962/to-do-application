@@ -25,7 +25,8 @@ async function createTables() {
         password_hash TEXT NOT NULL,
         created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
         is_verified BOOLEAN DEFAULT FALSE,
-        verification_token VARCHAR(6) DEFAULT generate_six_digit_code()
+        verification_token VARCHAR(6) DEFAULT generate_six_digit_code(),
+        created_verification_token_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
       );
 
       CREATE TABLE IF NOT EXISTS projects (

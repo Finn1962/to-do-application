@@ -8,7 +8,10 @@ const session = require("express-session");
 
 const app = express();
 
-const { accountsCleanup } = require("./src/utils/accountsCleanup.js");
+const {
+  accountsCleanup,
+  verificationTokenCleanup,
+} = require("./src/utils/cleanups.js");
 
 const { validateLogin } = require("./src/middlewares/validationLogin.js");
 
@@ -46,6 +49,7 @@ app.use(
 );
 
 accountsCleanup();
+verificationTokenCleanup();
 
 app.use("/login", loginRouter);
 

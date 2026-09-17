@@ -40,7 +40,8 @@ class Users {
     try {
       const { rows } = await pool.query(
         `UPDATE users 
-        SET verification_token = generate_six_digit_code()
+        SET verification_token = generate_six_digit_code(), 
+        created_verification_token_at = NOW()
         WHERE id = $1 
         RETURNING verification_token, email, username`,
         [userId],
@@ -49,6 +50,17 @@ class Users {
     } catch (error) {
       console.error(error);
       throw error;
+    }
+  }
+
+  static async clearExpiredVerificationTokens() {
+    try {
+      await pool.query(`
+        UPDATE users 
+        SET verification_token = NULL, created_verification_token_at = NULL
+        WHERE created_verification_token_at < NOW() - INTERVAL '10 minutes' `);
+    } catch (error) {
+      console.error(error);
     }
   }
 
@@ -147,14 +159,10 @@ class Users {
 
   static async changeUsername({ username, userId }) {
     try {
-      await pool.query(
-        `
-        UPDATE users
-        SET username = $1
-        WHERE id = $2
-       `,
-        [username, userId],
-      );
+      await pool.query("UPDATE users SET username = $1 WHERE id = $2", [
+        username,
+        userId,
+      ]);
     } catch (error) {
       console.error(error);
     }
