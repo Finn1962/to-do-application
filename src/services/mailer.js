@@ -16,7 +16,7 @@ class Mails {
     const mailOptions = {
       from: "the.focus.todo@gmail.com",
       to: email,
-      subject: "Your verification code for FOCUS TO-DO",
+      subject: "Your verification code",
       html: `<p>Hello ${username},<br> 
         Welcome to Focus To-Do! <br> <br>
         Your verification code is: <br>
@@ -29,11 +29,26 @@ class Mails {
     });
   }
 
+  static sendPasswordReset({ username, userId, email, verificationToken }) {
+    const mailOptions = {
+      from: "the.focus.todo@gmail.com",
+      to: email,
+      subject: "Your password reset link",
+      html: `<p>Hello ${username},<br><br> 
+         <a href="${process.env.URL}/register/resetPassword/${userId}/${verificationToken}">click here to reset your password.</a><br><br>
+        Best regards,<br>
+        FOCUS TO-DO</p>`,
+    };
+    mailTransporter.sendMail(mailOptions, (error) => {
+      if (error) return console.error(error);
+    });
+  }
+
   static sendPasswordChanged({ username, email }) {
     const mailOptions = {
       from: "the.focus.todo@gmail.com",
       to: email,
-      subject: "Your FOCUS TO-Do password has Changed",
+      subject: "Your password has Changed",
       html: `<p>Hello ${username},<br> 
          <br>Your password for Focus To-Do has been changed.<br><br>
         Best regards,<br>

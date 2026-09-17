@@ -67,6 +67,17 @@ class Users {
     }
   }
 
+  static async getUserDataByUserId(id) {
+    try {
+      const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [
+        id,
+      ]);
+      return rows[0];
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
   static async getUserDataByUsername(username) {
     try {
       const { rows } = await pool.query(
@@ -102,14 +113,33 @@ class Users {
     }
   }
 
-  static async changePasswordHash({ passwordHash, verificationToken, userId }) {
+  static async changePasswordHash(passwordHash, userId) {
     try {
       await pool.query(
         `UPDATE users
        SET password_hash = $1
-       WHERE verification_token = $2 AND id = 3$`,
-        [passwordHash, verificationToken, userId],
+       WHERE id = $2`,
+        [passwordHash, userId],
       );
+    } catch (error) {
+      console.error(error);
+    }
+  }
+
+  static async changePasswordHashWhereTocken({
+    passwordHash,
+    userId,
+    verificationToken,
+  }) {
+    try {
+      const { rowCount } = await pool.query(
+        `UPDATE users
+       SET password_hash = $1
+       WHERE id = $2 AND verification_token = $3 RETURNING *`,
+        [passwordHash, userId, verificationToken],
+      );
+      if (rowCount === 0) return false;
+      return true;
     } catch (error) {
       console.error(error);
     }

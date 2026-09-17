@@ -119,19 +119,54 @@ registerRouter.patch(
   },
 );
 
+registerRouter.get("/forgotPassword", (req, res) => {
+  res.render("forgotPassword");
+});
+
+registerRouter.post(
+  "/forgotPassword",
+
+  body("email").notEmpty().isEmail().trim().normalizeEmail(),
+
+  validateInputs,
+
+  async (req, res) => {
+    const { email } = matchedData(req);
+
+    const userData = await Users.getUserDataByEmail(email);
+
+    if (typeof userData === "undefined")
+      return res.render("forgotPassword", {
+        error: "Email address not registered",
+      });
+
+    const { verification_token, username } =
+      await Users.generateNewVerificationToken(userData.id);
+
+    Mails.sendPasswordReset({
+      username: username,
+      userId: userData.id,
+      email,
+      verificationToken: verification_token,
+    });
+
+    res.redirect("/login");
+  },
+);
+
 registerRouter.get(
   "/resetPassword/:userId/:verificationToken",
 
   [
-    param("verificationToken").isInt({ min: 1 }).toInt(),
     param("userId").isInt({ min: 1 }).toInt(),
+    param("verificationToken").isInt({ min: 1 }).toInt(),
   ],
 
   validateInputs,
 
   (req, res) => {
     const { verificationToken, userId } = matchedData(req);
-    res.render("passwordReset", { verificationToken, userId });
+    res.render("resetPassword", { verificationToken, userId });
   },
 );
 
@@ -155,13 +190,22 @@ registerRouter.patch(
 
   async (req, res) => {
     const { password, verificationToken, userId } = matchedData(req);
-    Users.changePasswordHash({
+    const foundToken = await Users.changePasswordHashWhereTocken({
       passwordHash: await hashPassword(password),
       verificationToken,
       userId,
     });
-    Users.deleteVerificationToken(userId);
-    res.redirect("/");
+    if (foundToken) {
+      Users.deleteVerificationToken(userId);
+      const { username, email } = await Users.getUserDataByUserId(userId);
+      Mails.sendPasswordChanged({
+        username,
+        email,
+      });
+      res.status(200).end();
+    } else {
+      res.status(400).end();
+    }
   },
 );
 
