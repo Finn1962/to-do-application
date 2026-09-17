@@ -12,9 +12,11 @@
     <link rel="stylesheet" href="/css/custom.css" />
     <link rel="stylesheet" href="/css/bootstrap-custom.css" />
     <script src="/checkbox-button.js" defer></script>
+    <script src="/tasks.js" defer></script>
+    <script src="/scrollPosition.js" defer></script>
   </head>
   <body>
-    <div class="d-flex flex-column position-relative p-0 vw-100 vh-100">
+    <div class="d-flex flex-column p-0 vh-100 overflow-hidden">
       <a
         href="<%=`/task/new/${selectedProject?.id}`%>"
         type="button"
@@ -30,9 +32,9 @@
         style="transform: translateY(-5px)"
         >➕ Add Project
       </a>
-      <div class="d-flex flex-grow-1 p-0 vw-100">
+      <div class="flex-grow-1 d-flex p-0 overflow-hidden">
         <div
-          class="d-flex flex-column flex-shrink-0 p-3 bg-body-tertiary flex-grow-0"
+          class="d-none d-lg-flex flex-column flex-shrink-0 p-3 bg-body-tertiary flex-grow-0"
           style="width: 280px"
         >
           <div
@@ -70,7 +72,10 @@
 
         <%- include('partials/tasks') %>
 
-        <div class="flex-grow-1 border p-3" style="max-width: 400px">
+        <div
+          class="d-none d-md-block flex-grow-1 border p-3"
+          style="max-width: 400px"
+        >
           <%if (assignedTasks?.length > 0) {%>
           <div
             class="d-flex justify-content-between align-items-center pb-3 mb-3 border-bottom"
@@ -83,7 +88,6 @@
                 data-checked="<%=selectedTask?.completed%>"
                 data-task-id="<%=selectedTask?.id%>"
                 data-project-id="<%=selectedProject?.id%>"
-                data-task-id="<%=selectedTask?.id%>"
                 checked
               />
               <%} else {%>
@@ -93,7 +97,6 @@
                 data-checked="<%=selectedTask?.completed%>"
                 data-task-id="<%=selectedTask?.id%>"
                 data-project-id="<%=selectedProject?.id%>"
-                data-task-id="<%=selectedTask?.id%>"
               />
               <%}%>
               <a
@@ -120,7 +123,7 @@
         </div>
       </div>
       <footer
-        class="flex-grow-0 d-flex justify-content-center align-items-center bg-dark"
+        class="flex-shrink-0 d-flex justify-content-center align-items-center bg-dark"
         style="height: 38px"
       >
         <small>

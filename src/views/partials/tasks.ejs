@@ -1,4 +1,7 @@
-<div class="list-group flex-grow-1 position-relative" style="border-radius: 0">
+<div
+  class="overflow-y-auto list-group flex-grow-1 position-relative"
+  style="border-radius: 0; height: 100%"
+>
   <% assignedTasks?.forEach((task)=>{ %>
   <%if (task.id === selectedTask.id) {%>
   <a

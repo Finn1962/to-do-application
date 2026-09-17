@@ -9,7 +9,6 @@ function accountsCleanup() {
 
 function verificationTokenCleanup() {
   cron.schedule("*/10 * * * *", async () => {
-    console.log("cleanup ausgeführt");
     Users.clearExpiredVerificationTokens();
   });
 }
