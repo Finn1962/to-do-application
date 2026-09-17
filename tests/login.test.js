@@ -5,8 +5,9 @@ const { Users } = require("../src/db/queries.js");
 
 const { comparePassword } = require("../src/middlewares/hash.js");
 
-jest.mock("../src/utils/accountsCleanup.js", () => ({
+jest.mock("../src/utils/cleanups.js", () => ({
   accountsCleanup: jest.fn(),
+  verificationTokenCleanup: jest.fn(),
 }));
 
 jest.mock("../src/middlewares/hash.js", () => ({

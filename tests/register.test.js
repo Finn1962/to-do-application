@@ -7,8 +7,9 @@ const { Mails } = require("../src/services/mailer.js");
 
 const { hashPassword } = require("../src/middlewares/hash.js");
 
-jest.mock("../src/utils/accountsCleanup.js", () => ({
+jest.mock("../src/utils/cleanups.js", () => ({
   accountsCleanup: jest.fn(),
+  verificationTokenCleanup: jest.fn(),
 }));
 
 jest.mock("../src/db/queries.js", () => ({
@@ -16,9 +17,9 @@ jest.mock("../src/db/queries.js", () => ({
     createUser: jest.fn(),
     getUserDataByUsername: jest.fn(),
     getUserDataByEmail: jest.fn(),
+    getUserDataByUserId: jest.fn(),
     activateUserAccount: jest.fn(),
     generateNewVerificationToken: jest.fn(),
-    deleteVerificationToken: jest.fn(),
     changePasswordHashWhereTocken: jest.fn(),
   },
 }));
@@ -27,6 +28,7 @@ jest.mock("../src/services/mailer.js", () => ({
   Mails: {
     sendVerification: jest.fn(),
     sendPasswordReset: jest.fn(),
+    sendPasswordChanged: jest.fn(),
   },
 }));
 
@@ -134,6 +136,11 @@ describe("/register", () => {
     hashPassword.mockResolvedValue(
       "$2b$10$ulX3RIF2nEYTAjt0A3XMQ.JeiDhf.Z8uYhFTYFy8QkNme7kVhXns.",
     );
+    Users.changePasswordHashWhereTocken.mockResolvedValue(true);
+    Users.getUserDataByUserId.mockResolvedValue({
+      username: "test-user",
+      email: "test@gmail.com",
+    });
 
     const response = await request(app).patch("/register/resetPassword").send({
       verificationToken: 123456,
@@ -141,6 +148,7 @@ describe("/register", () => {
       password: "test_1234",
       confirmPassword: "test_1234",
     });
+
     expect(Users.changePasswordHashWhereTocken).toHaveBeenCalledWith({
       passwordHash: expect.any(String),
       userId: 1,

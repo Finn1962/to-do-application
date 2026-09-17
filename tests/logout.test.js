@@ -15,8 +15,9 @@ jest.mock("express-session", () => {
   };
 });
 
-jest.mock("../src/utils/accountsCleanup.js", () => ({
+jest.mock("../src/utils/cleanups.js", () => ({
   accountsCleanup: jest.fn(),
+  verificationTokenCleanup: jest.fn(),
 }));
 
 describe("/login", () => {

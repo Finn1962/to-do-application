@@ -64,21 +64,6 @@ class Users {
     }
   }
 
-  static async deleteVerificationToken(userId) {
-    try {
-      const { rows } = await pool.query(
-        `UPDATE users 
-        SET verification_token = NULL
-        WHERE id = $1 `,
-        [userId],
-      );
-      return rows[0];
-    } catch (error) {
-      console.error(error);
-      throw error;
-    }
-  }
-
   static async getUserDataByUserId(id) {
     try {
       const { rows } = await pool.query("SELECT * FROM users WHERE id = $1", [

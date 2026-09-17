@@ -85,7 +85,6 @@ registerRouter.get(
     const { verificationToken, userId } = matchedData(req);
     const success = await Users.activateUserAccount(verificationToken, userId);
     if (success) {
-      Users.deleteVerificationToken(userId);
       res.redirect("/login");
     } else {
       res.render("verificationForm", {
@@ -196,7 +195,6 @@ registerRouter.patch(
       userId,
     });
     if (foundToken) {
-      Users.deleteVerificationToken(userId);
       const { username, email } = await Users.getUserDataByUserId(userId);
       Mails.sendPasswordChanged({
         username,
