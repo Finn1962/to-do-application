@@ -16,6 +16,7 @@ jest.mock("../src/db/queries.js", () => ({
     activateUserAccount: jest.fn(),
     generateNewVerificationToken: jest.fn(),
     deleteVerificationToken: jest.fn(),
+    changePasswordHash: jest.fn(),
   },
 }));
 
@@ -84,7 +85,23 @@ describe("/register", () => {
     expect(response.statusCode).toBe(200);
   });
 
-  test("should open first form to reset password", async () => {
-    const response = await request(app).get("/register/resetPassword");
+  test("should open second form to reset password", async () => {
+    const response = await request(app).get("/register/resetPassword/1/123456");
+    expect(response.statusCode).toBe(200);
+  });
+
+  test("should reset password", async () => {
+    const response = await request(app).patch("/register/resetPassword").send({
+      verificationToken: 123456,
+      userId: 1,
+      password: "test_1234",
+      confirmPassword: "test_1234",
+    });
+    expect(Users.changePasswordHash).toHaveBeenCalledWith({
+      passwordHash: expect.any(String),
+      userId: 1,
+      verificationToken: 123456,
+    });
+    expect(response.statusCode).toBe(302);
   });
 });

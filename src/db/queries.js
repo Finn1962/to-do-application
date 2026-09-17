@@ -102,14 +102,13 @@ class Users {
     }
   }
 
-  static async changePasswordHash(password_hash, userId) {
+  static async changePasswordHash({ passwordHash, verificationToken, userId }) {
     try {
       await pool.query(
-        `
-       UPDATE users
+        `UPDATE users
        SET password_hash = $1
-       WHERE id = $2`,
-        [password_hash, userId],
+       WHERE verification_token = $2 AND id = 3$`,
+        [passwordHash, verificationToken, userId],
       );
     } catch (error) {
       console.error(error);

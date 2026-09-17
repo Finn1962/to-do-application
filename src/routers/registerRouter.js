@@ -1,6 +1,6 @@
 const express = require("express");
 
-const { body, matchedData, query } = require("express-validator");
+const { body, matchedData, query, param } = require("express-validator");
 
 const { hashPassword } = require("../middlewares/hash.js");
 
@@ -119,14 +119,50 @@ registerRouter.patch(
   },
 );
 
-registerRouter.get("/resetPassword", (req, res, next) => {
-  console.log("augelöst");
-  res.status(200).end();
-});
-
 registerRouter.get(
   "/resetPassword/:userId/:verificationToken",
-  (req, res, next) => {},
+
+  [
+    param("verificationToken").isInt({ min: 1 }).toInt(),
+    param("userId").isInt({ min: 1 }).toInt(),
+  ],
+
+  validateInputs,
+
+  (req, res) => {
+    const { verificationToken, userId } = matchedData(req);
+    res.render("passwordReset", { verificationToken, userId });
+  },
+);
+
+registerRouter.patch(
+  "/resetPassword",
+
+  [
+    body("userId").isInt({ min: 1 }).toInt(),
+    body("verificationToken").isInt({ min: 1 }).toInt(),
+    body("password").notEmpty().isLength({ min: 8, max: 32 }),
+    body("confirmPassword").notEmpty().isLength({ min: 8, max: 32 }),
+    body("confirmPassword").custom((value, { req }) => {
+      if (value !== req.body.password) {
+        throw new Error("passwords do not match");
+      }
+      return true;
+    }),
+  ],
+
+  validateInputs,
+
+  async (req, res) => {
+    const { password, verificationToken, userId } = matchedData(req);
+    Users.changePasswordHash({
+      passwordHash: await hashPassword(password),
+      verificationToken,
+      userId,
+    });
+    Users.deleteVerificationToken(userId);
+    res.redirect("/");
+  },
 );
 
 module.exports = { registerRouter };
