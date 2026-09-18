@@ -60,6 +60,29 @@ homeRouter.get(
 );
 
 homeRouter.get(
+  "/renderProjects/:projectId",
+
+  [param("projectId").optional().isInt({ min: 1 }).toInt()],
+
+  validateInputs,
+
+  async (req, res) => {
+    const { projectId } = matchedData(req);
+
+    const projects = await Projects.getAllProjectsByUserId(req.session.user.id);
+
+    const selectedProject =
+      (projectId && projects.find((project) => project.id === projectId)) ||
+      projects[0];
+
+    res.render("partials/projects", {
+      projects,
+      selectedProject,
+    });
+  },
+);
+
+homeRouter.get(
   "/renderTasks/:projectId/:taskId",
 
   [
@@ -87,7 +110,45 @@ homeRouter.get(
       (taskId && assignedTasks.find((task) => task.id === taskId)) ||
       assignedTasks[0] ||
       null;
+
     res.render("partials/tasks", {
+      selectedProject,
+      assignedTasks,
+      selectedTask,
+    });
+  },
+);
+
+homeRouter.get(
+  "/renderTaskDescription/:projectId/:taskId",
+
+  [
+    param("projectId").optional().isInt({ min: 1 }).toInt(),
+    param("taskId").optional().isInt({ min: 1 }).toInt(),
+  ],
+
+  validateInputs,
+
+  async (req, res) => {
+    const { projectId, taskId } = matchedData(req);
+
+    const projects = await Projects.getAllProjectsByUserId(req.session.user.id);
+
+    const selectedProject =
+      (projectId && projects.find((project) => project.id === projectId)) ||
+      projects[0];
+
+    const assignedTasks = await Tasks.getAllTasksAssignedToProjectId(
+      selectedProject.id,
+      req.session.user.id,
+    );
+
+    const selectedTask =
+      (taskId && assignedTasks.find((task) => task.id === taskId)) ||
+      assignedTasks[0] ||
+      null;
+
+    res.render("partials/taskDescription", {
       selectedProject,
       assignedTasks,
       selectedTask,

@@ -1,106 +1,75 @@
-<div
-  class="overflow-y-auto list-group flex-grow-1 position-relative tasks-list"
-  style="border-radius: 0; height: 100%"
+<% assignedTasks?.forEach((task)=>{ %>
+<%if (task.id === selectedTask.id) {%>
+<a
+  data-href="<%=`/renderTasks/${selectedProject.id}/${task.id}`%>"
+  data-project-id="<%=selectedProject.id%>"
+  data-task-id="<%=task.id%>"
+  class="list-group-item list-group-item-action active z-0"
+  aria-current="true"
+  style="height: 78.5px; padding: 14px 16px 14px 16px"
 >
-  <% assignedTasks?.forEach((task)=>{ %>
-  <%if (task.id === selectedTask.id) {%>
-  <a
-    data-href="<%=`/renderTasks/${selectedProject.id}/${task.id}`%>"
-    class="list-group-item list-group-item-action active z-0"
-    aria-current="true"
-    style="height: 78.5px; padding: 14px 16px 14px 16px"
-  >
-    <div class="d-flex w-100 justify-content-between">
-      <%if (task.completed) {%>
-      <s class="mb-0">
-        <p class="m-0">
-          <strong><%=task.title%></strong>
-        </p>
-      </s>
-      <%} else {%>
+  <div class="d-flex w-100 justify-content-between">
+    <%if (task.completed) {%>
+    <s class="mb-0">
       <p class="m-0">
         <strong><%=task.title%></strong>
       </p>
-      <%}%>
-      <small
-        ><p class="m-0"><%=task.created_at.toLocaleDateString('de-DE')%></p>
-      </small>
-    </div>
-    <p class="col-10 mb-1 small" style="transform: translateY(-4px)">
-      <%=task.description.replace(/<[^>]*>/g, ' ').substring(0, 50)%>
+    </s>
+    <%} else {%>
+    <p class="m-0">
+      <strong><%=task.title%></strong>
     </p>
-  </a>
-  <%} else {%>
-  <a
-    data-href="<%=`/renderTasks/${selectedProject.id}/${task.id}`%>"
-    class="list-group-item list-group-item-action py-3 lh-sm"
-  >
-    <div class="d-flex w-100 align-items-center justify-content-between">
-      <%if (task.completed) {%>
-      <s class="mb-0">
-        <p class="m-0 text-body-tertiary">
-          <strong><%=task.title%></strong>
-        </p>
-      </s>
-      <%} else {%>
-      <p class="m-0">
+    <%}%>
+    <small
+      ><p class="m-0"><%=task.created_at.toLocaleDateString('de-DE')%></p>
+    </small>
+  </div>
+  <p class="col-10 mb-1 small" style="transform: translateY(-4px)">
+    <%=task.description.replace(/<[^>]*>/g, ' ').substring(0, 50)%>
+  </p>
+</a>
+<%} else {%>
+<a
+  data-href="<%=`/renderTasks/${selectedProject.id}/${task.id}`%>"
+  data-project-id="<%=selectedProject.id%>"
+  data-task-id="<%=task.id%>"
+  class="list-group-item list-group-item-action py-3 lh-sm"
+>
+  <div class="d-flex w-100 align-items-center justify-content-between">
+    <%if (task.completed) {%>
+    <s class="mb-0">
+      <p class="m-0 text-body-tertiary">
         <strong><%=task.title%></strong>
       </p>
-      <%}%>
-      <small class="text-body-secondary mb-1">
-        <p class="<%if (task.completed) {%>text-body-tertiary<%}%> m-0">
-          <%=task.created_at.toLocaleDateString('de-DE')%>
-        </p>
-      </small>
-    </div>
-    <p
-      class="<%if (task.completed) {%>text-body-tertiary<%}%> col-10 mb-1 small"
-    >
-      <%=task.description.replace(/<[^>]*>/g, ' ').substring(0, 50)%>
+    </s>
+    <%} else {%>
+    <p class="m-0">
+      <strong><%=task.title%></strong>
     </p>
-  </a>
-  <%}%>
-  <% }); %>
-  <%if (assignedTasks?.length === 0) {%>
-  <img
-    class="position-absolute top-50 start-50 translate-middle"
-    style="width: 100%; max-width: 600px"
-    src="/grafic-one.svg"
-  />
-  <p
-    class="fw-bold position-absolute start-50 translate-middle fs-5 text-center"
-    style="bottom: 20px"
-  >
-    Nothing is happening here yet!
+    <%}%>
+    <small class="text-body-secondary mb-1">
+      <p class="<%if (task.completed) {%>text-body-tertiary<%}%> m-0">
+        <%=task.created_at.toLocaleDateString('de-DE')%>
+      </p>
+    </small>
+  </div>
+  <p class="<%if (task.completed) {%>text-body-tertiary<%}%> col-10 mb-1 small">
+    <%=task.description.replace(/<[^>]*>/g, ' ').substring(0, 50)%>
   </p>
-  <p class="position-absolute bottom-0 start-50 translate-middle">
-    Add a Task.
-  </p>
-  <%}%>
-
-  <!--
-  <script>
-    const tasks = document.querySelectorAll(".list-group-item");
-    const tasksContainer = document.querySelector(".tasks-container");
-
-    const queryString = window.location.search;
-
-    const params = new URLSearchParams(queryString);
-
-    const scrollPosition = params.get("tasksScrollY");
-
-    tasksContainer.scrollTop = scrollPosition;
-
-    tasks.forEach((task) => {
-      task.addEventListener("click", (event) => {
-        event.preventDefault();
-
-        const targetURL = task.href;
-        const taskScrollPosition = tasksContainer.scrollTop;
-        const newURL = `${targetURL}&tasksScrollY=${taskScrollPosition}`;
-        window.location.href = newURL;
-      });
-    });
-  </script>
-  -->
-</div>
+</a>
+<%}%>
+<% }); %>
+<%if (assignedTasks?.length === 0) {%>
+<img
+  class="position-absolute top-50 start-50 translate-middle"
+  style="width: 100%; max-width: 600px"
+  src="/grafic-one.svg"
+/>
+<p
+  class="fw-bold position-absolute start-50 translate-middle fs-5 text-center"
+  style="bottom: 20px"
+>
+  Nothing is happening here yet!
+</p>
+<p class="position-absolute bottom-0 start-50 translate-middle">Add a Task.</p>
+<%}%>

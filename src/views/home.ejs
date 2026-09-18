@@ -11,26 +11,32 @@
     ></script>
     <link rel="stylesheet" href="/css/custom.css" />
     <link rel="stylesheet" href="/css/bootstrap-custom.css" />
-    <script src="/checkbox-button.js" defer></script>
-    <script src="/tasksList.js" defer></script>
+    <script src="/partial-renderings.js" defer></script>
   </head>
   <body>
-    <div class="d-flex flex-column p-0 vh-100 overflow-hidden">
-      <a
-        href="<%=`/task/new/${selectedProject?.id}`%>"
-        type="button"
-        class="btn btn-light shadow position-fixed end-0 bottom-0 z-5 me-3 mb-5 fw-bold"
-        style="transform: translateY(-50px)"
+    <a
+      href="<%=`/task/new/${selectedProject?.id}`%>"
+      type="button"
+      class="btn btn-light shadow position-fixed end-0 bottom-0 z-3 me-3 mb-5 fw-bold"
+      style="transform: translateY(-50px)"
+    >
+      ➕ Add Task
+    </a>
+    <a
+      href="/project/new"
+      class="btn btn-light shadow position-fixed end-0 bottom-0 z-3 me-3 mb-5 fw-bold"
+      type="button"
+      style="transform: translateY(-5px)"
+      >➕ Add Project
+    </a>
+    <div class="d-flex flex-column p-0 vh-100 z-0 overflow-hidden">
+      <header
+        class="bg-light d-flex justify-content-between pt-1 pb-1 ps-3 pe-3 d-lg-none"
+        style="height: 38px"
       >
-        ➕ Add Task
-      </a>
-      <a
-        href="/project/new"
-        class="btn btn-light shadow position-fixed end-0 bottom-0 z-5 me-3 mb-5 fw-bold"
-        type="button"
-        style="transform: translateY(-5px)"
-        >➕ Add Project
-      </a>
+        <img src="/burger-menu.svg" width="20" />
+        <img src="/logo-var-two.svg" alt="logo" width="200" />
+      </header>
       <div class="flex-grow-1 d-flex p-0 overflow-hidden">
         <div
           class="d-none d-lg-flex flex-column flex-shrink-0 p-3 bg-body-tertiary flex-grow-0"
@@ -43,7 +49,11 @@
           </div>
           <hr />
 
-          <%- include('partials/projects') %>
+          <ul
+            class="nav nav-pills flex-nowrap flex-column mb-auto project-container overflow-y-auto"
+          >
+            <%- include('partials/projects') %>
+          </ul>
 
           <div class="d-grid gap-2"></div>
           <hr />
@@ -69,56 +79,18 @@
           </div>
         </div>
 
-        <%- include('partials/tasks') %>
+        <div
+          class="overflow-y-auto list-group flex-grow-1 position-relative tasks-list"
+          style="border-radius: 0; height: 100%"
+        >
+          <%- include('partials/tasks') %>
+        </div>
 
         <div
-          class="d-none d-md-block flex-grow-1 border p-3"
+          class="d-none d-md-block flex-grow-1 border p-3 description-container"
           style="max-width: 400px"
         >
-          <%if (assignedTasks?.length > 0) {%>
-          <div
-            class="d-flex justify-content-between align-items-center pb-3 mb-3 border-bottom"
-          >
-            <div class="d-flex gap-3">
-              <%if (selectedTask?.completed) {%>
-              <input
-                type="checkbox"
-                class="ui-checkbox"
-                data-checked="<%=selectedTask?.completed%>"
-                data-task-id="<%=selectedTask?.id%>"
-                data-project-id="<%=selectedProject?.id%>"
-                checked
-              />
-              <%} else {%>
-              <input
-                type="checkbox"
-                class="ui-checkbox"
-                data-checked="<%=selectedTask?.completed%>"
-                data-task-id="<%=selectedTask?.id%>"
-                data-project-id="<%=selectedProject?.id%>"
-              />
-              <%}%>
-              <a
-                href="/task/edit/<%=selectedTask?.id%>?projectId=<%=selectedProject?.id%>"
-                class="d-flex justify-content-center align-items-center bg-transparent border-0 p-0"
-              >
-                <img src="/pencil-square.svg" />
-              </a>
-              <a
-                href="/task/delete/<%=selectedTask?.id%>?projectId=<%=selectedProject?.id%>"
-                class="d-flex justify-content-center align-items-center bg-transparent border-0 p-0"
-              >
-                <img src="/trash.svg" />
-              </a>
-            </div>
-
-            <p class="m-0 text-secondary">
-              <%=selectedTask?.created_at.toLocaleDateString('de-DE')%>
-            </p>
-          </div>
-          <%}%>
-          <h3 class="mb-3"><%=selectedTask?.title%></h3>
-          <%- selectedTask?.description %>
+          <%- include('partials/taskDescription') %>
         </div>
       </div>
       <footer

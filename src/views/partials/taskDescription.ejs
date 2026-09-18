@@ -1,0 +1,44 @@
+<%if (assignedTasks?.length > 0) {%>
+<div
+  class="d-flex justify-content-between align-items-center pb-3 mb-3 border-bottom"
+>
+  <div class="d-flex gap-3">
+    <%if (selectedTask?.completed) {%>
+    <input
+      type="checkbox"
+      class="ui-checkbox"
+      data-checked="<%=selectedTask?.completed%>"
+      data-task-id="<%=selectedTask?.id%>"
+      data-project-id="<%=selectedProject?.id%>"
+      checked
+    />
+    <%} else {%>
+    <input
+      type="checkbox"
+      class="ui-checkbox"
+      data-checked="<%=selectedTask?.completed%>"
+      data-task-id="<%=selectedTask?.id%>"
+      data-project-id="<%=selectedProject?.id%>"
+    />
+    <%}%>
+    <a
+      href="/task/edit/<%=selectedTask?.id%>?projectId=<%=selectedProject?.id%>"
+      class="d-flex justify-content-center align-items-center bg-transparent border-0 p-0"
+    >
+      <img src="/pencil-square.svg" />
+    </a>
+    <a
+      href="/task/delete/<%=selectedTask?.id%>?projectId=<%=selectedProject?.id%>"
+      class="d-flex justify-content-center align-items-center bg-transparent border-0 p-0"
+    >
+      <img src="/trash.svg" />
+    </a>
+  </div>
+
+  <p class="m-0 text-secondary">
+    <%=selectedTask?.created_at.toLocaleDateString('de-DE')%>
+  </p>
+</div>
+<%}%>
+<h3 class="mb-3"><%=selectedTask?.title%></h3>
+<%- selectedTask?.description %>
