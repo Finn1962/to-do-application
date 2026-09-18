@@ -1,5 +1,5 @@
 <div
-  class="overflow-y-auto list-group flex-grow-1 position-relative"
+  class="overflow-y-auto list-group flex-grow-1 position-relative tasks-container"
   style="border-radius: 0; height: 100%"
 >
   <% assignedTasks?.forEach((task)=>{ %>
@@ -77,4 +77,30 @@
     Add a Task.
   </p>
   <%}%>
+
+  <!--
+  <script>
+    const tasks = document.querySelectorAll(".list-group-item");
+    const tasksContainer = document.querySelector(".tasks-container");
+
+    const queryString = window.location.search;
+
+    const params = new URLSearchParams(queryString);
+
+    const scrollPosition = params.get("tasksScrollY");
+
+    tasksContainer.scrollTop = scrollPosition;
+
+    tasks.forEach((task) => {
+      task.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        const targetURL = task.href;
+        const taskScrollPosition = tasksContainer.scrollTop;
+        const newURL = `${targetURL}&tasksScrollY=${taskScrollPosition}`;
+        window.location.href = newURL;
+      });
+    });
+  </script>
+  -->
 </div>
