@@ -69,4 +69,9 @@ describe("GET /", () => {
     expect(Projects.getAllProjectsByUserId).toHaveBeenCalledWith(1);
     expect(Tasks.getAllTasksAssignedToProjectId).toHaveBeenCalledWith(3, 1);
   });
+
+  test("should render taskslist", async () => {
+    const response = await request(app).get("/renderTasks/1/1");
+    expect(response.statusCode).toBe(200);
+  });
 });
