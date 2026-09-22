@@ -5,49 +5,55 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>FOCUS TO-DO</title>
     <link rel="icon" type="image/png" href="/favicon.svg" />
+    <link rel="stylesheet" href="/css/custom.css" />
+    <link rel="stylesheet" href="/css/bootstrap-custom.css" />
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
       defer
     ></script>
-    <link rel="stylesheet" href="/css/custom.css" />
-    <link rel="stylesheet" href="/css/bootstrap-custom.css" />
     <script src="/partial-renderings.js" defer></script>
+    <script src="/responsiveness.js" defer></script>
   </head>
   <body>
     <a
       href="<%=`/task/new/${selectedProject?.id}`%>"
       type="button"
-      class="btn btn-light shadow position-fixed end-0 bottom-0 z-3 me-3 mb-5 fw-bold"
+      class="btn btn-light shadow position-fixed end-0 bottom-0 z-3 me-3 mb-5 fw-bold add-button"
       style="transform: translateY(-50px)"
     >
       ➕ Add Task
     </a>
     <a
       href="/project/new"
-      class="btn btn-light shadow position-fixed end-0 bottom-0 z-3 me-3 mb-5 fw-bold"
+      class="btn btn-light shadow position-fixed end-0 bottom-0 z-3 me-3 mb-5 fw-bold add-button"
       type="button"
       style="transform: translateY(-5px)"
       >➕ Add Project
     </a>
     <div class="d-flex flex-column p-0 vh-100 z-0 overflow-hidden">
       <header
-        class="bg-light d-flex justify-content-between pt-1 pb-1 ps-3 pe-3 d-lg-none"
-        style="height: 38px"
+        class="bg-light d-flex justify-content-between align-items-start pt-2 pb-1 ps-3 pe-3 m-0 d-lg-none"
+        style="height: 50px"
       >
-        <img src="/burger-menu.svg" width="20" />
-        <img src="/logo-var-two.svg" alt="logo" width="200" />
+        <label class="burger" for="burger">
+          <input type="checkbox" id="burger" class="burger-button" />
+          <span></span>
+          <span></span>
+          <span></span>
+        </label>
+
+        <img src="/logo-var-two.svg" alt="logo" height="20" />
       </header>
       <div class="flex-grow-1 d-flex p-0 overflow-hidden">
         <div
-          class="d-none d-lg-flex flex-column flex-shrink-0 p-3 bg-body-tertiary flex-grow-0"
-          style="width: 280px"
+          class="menu slide-in-left d-none d-lg-flex flex-column flex-shrink-0 p-3 bg-body-tertiary flex-grow-0"
+          style="width: 300px"
         >
           <div
-            class="d-flex align-items-center justify-content-start mb-3 ms-1 mt-3"
+            class="d-none d-lg-flex align-items-center justify-content-start mb-3 ms-1 mt-3"
           >
             <img src="/logo-var-two.svg" alt="logo" width="200" />
           </div>
-          <hr />
 
           <ul
             class="nav nav-pills flex-nowrap flex-column mb-auto project-container overflow-y-auto"
@@ -55,27 +61,28 @@
             <%- include('partials/projects') %>
           </ul>
 
-          <div class="d-grid gap-2"></div>
-          <hr />
-          <div class="dropdown">
-            <div
-              class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle"
-              data-bs-toggle="dropdown"
-              aria-expanded="false"
-            >
+          <div class="aligm-self-end">
+            <hr />
+            <div class="dropdown">
               <div
-                class="rounded-circle me-2 bg-primary d-flex justify-content-center align-items-center text-white fs-5 fw-medium"
-                style="height: 32px; width: 32px"
+                class="d-flex align-items-center link-body-emphasis text-decoration-none dropdown-toggle cursor-pointer"
+                data-bs-toggle="dropdown"
+                aria-expanded="false"
               >
-                <%=userData.username[0]%>
+                <div
+                  class="rounded-circle me-2 bg-primary d-flex justify-content-center align-items-center text-white fs-5 fw-medium"
+                  style="height: 32px; width: 32px"
+                >
+                  <%=userData.username[0]%>
+                </div>
+                <strong><%=userData.username%></strong>
               </div>
-              <strong><%=userData.username%></strong>
+              <ul class="dropdown-menu text-small shadow">
+                <li><a class="dropdown-item" href="/settings">Profile</a></li>
+                <li><hr class="dropdown-divider" /></li>
+                <li><a class="dropdown-item" href="/logout">Sign out</a></li>
+              </ul>
             </div>
-            <ul class="dropdown-menu text-small shadow">
-              <li><a class="dropdown-item" href="/settings">Profile</a></li>
-              <li><hr class="dropdown-divider" /></li>
-              <li><a class="dropdown-item" href="/logout">Sign out</a></li>
-            </ul>
           </div>
         </div>
 
@@ -87,7 +94,7 @@
         </div>
 
         <div
-          class="d-none d-md-block flex-grow-1 border p-3 description-container"
+          class="d-none d-md-block flex-grow-1 border p-3 w-100 description-container"
           style="max-width: 400px"
         >
           <%- include('partials/taskDescription') %>

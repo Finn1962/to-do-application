@@ -61,15 +61,17 @@
 <% }); %>
 <%if (assignedTasks?.length === 0) {%>
 <img
-  class="position-absolute top-50 start-50 translate-middle"
-  style="width: 100%; max-width: 600px"
+  class="position-absolute top-50 start-50"
+  style="width: 100%; max-width: 600px; transform: translate(-50%, -60%)"
   src="/grafic-one.svg"
 />
 <p
-  class="fw-bold position-absolute start-50 translate-middle fs-5 text-center"
-  style="bottom: 20px"
+  class="fw-bold position-absolute start-50 translate-middle fs-5 text-center w-100"
+  style="bottom: 120px"
 >
   Nothing is happening here yet!
 </p>
-<p class="position-absolute bottom-0 start-50 translate-middle">Add a Task.</p>
+<p class="position-absolute start-50 translate-middle" style="bottom: 90px">
+  Add a Task.
+</p>
 <%}%>
