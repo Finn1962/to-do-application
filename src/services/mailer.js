@@ -1,3 +1,5 @@
+const path = require("path");
+const fs = require("fs");
 const nodemailer = require("nodemailer");
 require("dotenv").config();
 
@@ -12,17 +14,32 @@ const mailTransporter = nodemailer.createTransport({
 });
 
 class Mails {
+  static #templatesDir = path.join(__dirname, "../mail-templates");
+
+  static #_loadTemplate(templateName, variables = {}) {
+    console.log("eins: ", __dirname);
+    console.log("zwei: ", this.#templatesDir);
+    const filePath = path.join(this.#templatesDir, `${templateName}.html`);
+
+    let html = fs.readFileSync(filePath, "utf8");
+
+    Object.keys(variables).forEach((key) => {
+      const regex = new RegExp(`{{${key}}}`, "g");
+      html = html.replace(regex, variables[key] ?? "");
+    });
+
+    return html;
+  }
+
   static sendVerification({ username, email, verificationToken }) {
     const mailOptions = {
       from: "the.focus.todo@gmail.com",
       to: email,
       subject: "Your verification code",
-      html: `<p>Hello ${username},<br> 
-        Welcome to Focus To-Do! <br> <br>
-        Your verification code is: <br>
-        <strong>${verificationToken}</strong><br><br>
-        Best regards,<br>
-        FOCUS TO-DO</p>`,
+      html: this.#_loadTemplate("verification-mail", {
+        username,
+        verificationToken,
+      }),
     };
     mailTransporter.sendMail(mailOptions, (error) => {
       if (error) return console.error(error);

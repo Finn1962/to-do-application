@@ -15,10 +15,11 @@
     <script src="/responsiveness.js" defer></script>
   </head>
   <body>
+    <!--href for new task button is updated in partial-rendering.js-->
     <a
       href="<%=`/task/new/${selectedProject?.id}`%>"
       type="button"
-      class="btn btn-light shadow position-fixed end-0 bottom-0 z-3 me-3 mb-5 fw-bold add-button"
+      class="btn btn-light shadow position-fixed end-0 bottom-0 z-3 me-3 mb-5 fw-bold add-button new-task-button"
       style="transform: translateY(-50px)"
     >
       ➕ Add Task
@@ -32,7 +33,7 @@
     </a>
     <div class="d-flex flex-column p-0 vh-100 z-0 overflow-hidden">
       <header
-        class="bg-light d-flex justify-content-between align-items-start pt-2 pb-1 ps-3 pe-3 m-0 d-lg-none"
+        class="bg-light d-flex justify-content-between align-items-start pt-3 pb-1 ps-3 pe-3 m-0 d-lg-none"
         style="height: 50px"
       >
         <label class="burger" for="burger">

@@ -37,6 +37,7 @@ function hiddeMenuContainer() {
 menuButton.addEventListener("click", () => {
   if (!menuIsVisible === true) {
     showMenuContainer();
+    hiddeTaskDescription();
   } else {
     hiddeMenuContainer();
   }

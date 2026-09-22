@@ -6,6 +6,8 @@ const tasksList = document.querySelector(".tasks-list");
 
 const descriptionContainer = document.querySelector(".description-container");
 
+const newTaskButton = document.querySelector(".new-task-button");
+
 tasksList.addEventListener("click", async (event) => {
   const targetTask = event.target.closest("a");
 
@@ -66,6 +68,8 @@ projectList.addEventListener("click", async (event) => {
   projectList.innerHTML = await projectListContent.text();
   tasksList.innerHTML = await tasksListContent.text();
   descriptionContainer.innerHTML = await taskDescriptionContent.text();
+
+  newTaskButton.href = `/task/new/${targetProject.dataset.projectId}`;
 
   url.searchParams.set("projectId", targetProject.dataset.projectId);
   url.searchParams.set("taskId", 1);
