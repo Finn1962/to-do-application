@@ -30,7 +30,7 @@ jest.mock("../src/db/queries.js", () => ({
   },
 }));
 
-describe("/login", () => {
+describe("projects", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

@@ -4,7 +4,7 @@
   data-href="<%=`/renderTasks/${selectedProject.id}/${task.id}`%>"
   data-project-id="<%=selectedProject.id%>"
   data-task-id="<%=task.id%>"
-  class="list-group-item list-group-item-action active z-0"
+  class="list-group-item list-group-item-action active z-0 border-top-0 border-bottom-0"
   aria-current="true"
   style="height: 78.5px; padding: 14px 16px 14px 16px"
 >
@@ -33,7 +33,7 @@
   data-href="<%=`/renderTasks/${selectedProject.id}/${task.id}`%>"
   data-project-id="<%=selectedProject.id%>"
   data-task-id="<%=task.id%>"
-  class="list-group-item list-group-item-action py-3 lh-sm"
+  class="list-group-item list-group-item-action py-3 lh-sm border-top-0 border-start-0 border-end-0"
 >
   <div class="d-flex w-100 align-items-center justify-content-between">
     <%if (task.completed) {%>

@@ -29,6 +29,8 @@ const { logoutRouter } = require("./src/routers/logoutRouter.js");
 
 const { settingsRouter } = require("./src/routers/settingsRouter.js");
 
+const { imagesRouter } = require("./src/routers/imagesRouter.js");
+
 app.set("view engine", "ejs");
 
 app.set("views", path.join(__dirname, "./src/views"));
@@ -56,6 +58,8 @@ app.use("/login", loginRouter);
 app.use("/register", registerRouter);
 
 app.use("/logout", logoutRouter);
+
+app.use("/images", imagesRouter);
 
 app.use("/project", validateLogin, projectsRouter);
 

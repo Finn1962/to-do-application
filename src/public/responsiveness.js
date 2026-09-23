@@ -31,6 +31,7 @@ function hiddeMenuContainer() {
   menuIsVisible = false;
   menuContainer.classList.replace("d-flex", "d-none");
   menuContainer.removeAttribute("style");
+  menuContainer.style.width = "300px";
   addButtons.forEach((button) => button.classList.remove("d-none"));
 }
 

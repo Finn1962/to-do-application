@@ -20,7 +20,7 @@ jest.mock("../src/utils/cleanups.js", () => ({
   verificationTokenCleanup: jest.fn(),
 }));
 
-describe("/login", () => {
+describe("logout", () => {
   it("should logout user", async () => {
     const response = await request(app).get("/logout");
     expect(mockDestroy).toHaveBeenCalled();

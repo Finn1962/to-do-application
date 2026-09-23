@@ -40,7 +40,7 @@ jest.mock("../src/middlewares/hash.js", () => ({
   hashPassword: jest.fn(),
 }));
 
-describe("/register", () => {
+describe("register", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

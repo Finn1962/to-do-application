@@ -29,7 +29,7 @@ jest.mock("../src/db/queries.js", () => ({
   },
 }));
 
-describe("GET /", () => {
+describe("home", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });
@@ -70,13 +70,26 @@ describe("GET /", () => {
     expect(Tasks.getAllTasksAssignedToProjectId).toHaveBeenCalledWith(3, 1);
   });
 
+  test("should render projects list", async () => {
+    const response = await request(app).get("/renderProjects/1");
+
+    expect(Projects.getAllProjectsByUserId).toHaveBeenCalledWith(1);
+    expect(response.statusCode).toBe(200);
+  });
+
   test("should render tasks list", async () => {
-    const response = await request(app).get("/renderTasks/1/1");
+    const response = await request(app).get("/renderTasks/2/1");
+
+    expect(Projects.getAllProjectsByUserId).toHaveBeenCalledWith(1);
+    expect(Tasks.getAllTasksAssignedToProjectId).toHaveBeenCalledWith(2, 1);
     expect(response.statusCode).toBe(200);
   });
 
   test("should render task description", async () => {
-    const response = await request(app).get("/renderTaskDescription/1/1");
+    const response = await request(app).get("/renderTaskDescription/2/1");
+
+    expect(Projects.getAllProjectsByUserId).toHaveBeenCalledWith(1);
+    expect(Tasks.getAllTasksAssignedToProjectId).toHaveBeenCalledWith(2, 1);
     expect(response.statusCode).toBe(200);
   });
 });

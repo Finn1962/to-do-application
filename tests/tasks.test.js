@@ -31,7 +31,7 @@ jest.mock("../src/utils/sanitizer.js", () => ({
   sanitizeHtml: jest.fn((input) => input),
 }));
 
-describe("/login", () => {
+describe("tasks", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Willkommen bei {{Firmenname}}</title>
 
     <style type="text/css">
       html,
@@ -168,11 +167,9 @@
     <table class="body-table">
       <tr>
         <td>
-          <!-- Hauptzentrierter Container -->
           <table class="main-wrapper">
             <tr>
               <td class="card">
-                <!-- Header -->
                 <table style="width: 100%">
                   <tr>
                     <td class="header-td">
@@ -180,82 +177,36 @@
                     </td>
                   </tr>
                 </table>
-
-                <!-- Hauptinhalt -->
                 <table style="width: 100%">
                   <tr>
                     <td class="content-td">
-                      <h1 class="heading-h1">Hello {{Vorname}},</h1>
+                      <h1 class="heading-h1">Hello <%=username%>,</h1>
                       <p class="paragraph">
                         Thank you for registering. We are delighted to welcome
                         you on board! To fully activate your account, please
                         verify your email using the following verification code.
                       </p>
-
-                      <!-- Infobox -->
                       <div class="highlight-box">
                         <p class="highlight-text">
-                          <strong>{{code}}</strong>
+                          <strong><%=verificationToken%></strong>
                         </p>
                       </div>
 
-                      <!-- Call to Action Button -->
-                      <table style="width: 100%">
-                        <tr>
-                          <td class="button-container-td">
-                            <a
-                              href="https://example.com/action-link"
-                              target="_blank"
-                              class="btn-link"
-                              >Account jetzt aktivieren</a
-                            >
-                          </td>
-                        </tr>
-                      </table>
-
-                      <p class="paragraph">
-                        Falls du Fragen hast oder Hilfe benötigst, antworte
-                        einfach direkt auf diese E-Mail. Unser Support-Team
-                        hilft dir gerne weiter.
-                      </p>
                       <p class="paragraph" style="margin-bottom: 0">
-                        Beste Grüße,<br />
-                        Das Team von {{Firmenname}}
+                        Best regards,<br />
+                        the Focus To-Do team
                       </p>
                     </td>
                   </tr>
                 </table>
-
-                <!-- Footer -->
                 <table style="width: 100%">
                   <tr>
                     <td class="footer-td">
                       <p class="footer-text">
-                        Du erhältst diese E-Mail, weil du dich bei
-                        {{Firmenname}} registriert hast.
+                        You are receiving this email because you registered with
+                        FOCUS TO-DO.
                       </p>
-                      <p class="footer-text">
-                        <a
-                          href="https://example.com/impressum"
-                          class="footer-link"
-                          >Impressum</a
-                        >
-                        &bull;
-                        <a
-                          href="https://example.com/datenschutz"
-                          class="footer-link"
-                          >Datenschutz</a
-                        >
-                        &bull;
-                        <a
-                          href="https://example.com/unsubscribe"
-                          class="footer-link"
-                          >Abmelden</a
-                        >
-                      </p>
-                      <p class="footer-text">
-                        &copy; 2026 {{Firmenname}}. Alle Rechte vorbehalten.
-                      </p>
+                      <p class="footer-text">&copy; 2026 FOCUS TO-DO.</p>
                     </td>
                   </tr>
                 </table>

@@ -20,7 +20,7 @@ jest.mock("../src/db/queries.js", () => ({
   },
 }));
 
-describe("/login", () => {
+describe("login", () => {
   Users.getUserDataByUsername.mockResolvedValue({
     username: "test-user",
     password_hash:

@@ -38,7 +38,7 @@ jest.mock("../src/utils/cleanups.js", () => ({
   verificationTokenCleanup: jest.fn(),
 }));
 
-describe("GET /", () => {
+describe("settings", () => {
   beforeEach(() => {
     jest.clearAllMocks();
   });

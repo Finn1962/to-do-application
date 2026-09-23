@@ -46,8 +46,9 @@
         <img src="/logo-var-two.svg" alt="logo" height="20" />
       </header>
       <div class="flex-grow-1 d-flex p-0 overflow-hidden">
+        <!--menu width get changed in responsiveness.js-->
         <div
-          class="menu slide-in-left d-none d-lg-flex flex-column flex-shrink-0 p-3 bg-body-tertiary flex-grow-0"
+          class="menu slide-in-left d-none d-lg-flex flex-column flex-shrink-0 p-3 bg-body-tertiary flex-grow-0 border-end"
           style="width: 300px"
         >
           <div
@@ -95,7 +96,7 @@
         </div>
 
         <div
-          class="d-none d-md-block flex-grow-1 border p-3 w-100 description-container"
+          class="d-none d-md-block flex-grow-1 border p-3 w-100 description-container border-top-0 border-bottom-0"
           style="max-width: 400px"
         >
           <%- include('partials/taskDescription') %>
