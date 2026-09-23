@@ -17,6 +17,14 @@ const mailTransporter = nodemailer.createTransport({
   },
 });
 
+mailTransporter.verify((error) => {
+  if (error) {
+    console.error("Fehler bei der SMTP-Verbindung:", error);
+  } else {
+    console.log("SMTP-Server ist bereit zum Senden!");
+  }
+});
+
 class Mails {
   static async sendVerification({ username, email, verificationToken }) {
     const mailOptions = {
