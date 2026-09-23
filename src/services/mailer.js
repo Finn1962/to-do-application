@@ -7,9 +7,13 @@ const mailTransporter = nodemailer.createTransport({
   pool: true,
   host: "smtp.gmail.com",
   port: 587,
+  secure: false,
   auth: {
     user: "the.focus.todo@gmail.com",
     pass: process.env.EMAIL_ACC_PASSWORD,
+  },
+  tls: {
+    rejectUnauthorized: false,
   },
 });
 
