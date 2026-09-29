@@ -1,16 +1,16 @@
-const express = require("express");
+import express from "express";
 
-const { body, matchedData, query, param } = require("express-validator");
+import { body, matchedData, query, param } from "express-validator";
 
-const { hashPassword } = require("../middlewares/hash.js");
+import { hashPassword } from "../middlewares/hash.js";
 
-const { Mails } = require("../services/mailer.js");
+import { Mails } from "../services/mailer.js";
 
-const { validateInputs } = require("../middlewares/validationInputs.js");
+import { validateInputs } from "../middlewares/validationInputs.js";
 
-const { addSampleProject } = require("../utils/sampleProjects.js");
+import { addSampleProject } from "../utils/sampleProjects.js";
 
-const { Users } = require("../db/queries.js");
+import { Users } from "../db/queries.js";
 
 const registerRouter = express.Router();
 
@@ -207,4 +207,4 @@ registerRouter.patch(
   },
 );
 
-module.exports = { registerRouter };
+export { registerRouter };

@@ -1,5 +1,6 @@
-const { Users } = require("../db/queries.js");
-const cron = require("node-cron");
+import { Users } from "../db/queries.js";
+
+import cron from "node-cron";
 
 function accountsCleanup() {
   cron.schedule("*/10 * * * *", async () => {
@@ -13,4 +14,4 @@ function verificationTokenCleanup() {
   });
 }
 
-module.exports = { accountsCleanup, verificationTokenCleanup };
+export { accountsCleanup, verificationTokenCleanup };

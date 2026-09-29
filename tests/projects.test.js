@@ -1,7 +1,7 @@
-const request = require("supertest");
-const { app } = require("../app.js");
+import request from "supertest";
+import { app } from "../app.js";
 
-const { Projects } = require("../src/db/queries.js");
+import { Projects } from "../src/db/queries.js";
 
 jest.mock("express-session", () => {
   return () => (req, res, next) => {

@@ -1,16 +1,16 @@
-const express = require("express");
+import express from "express";
+
+import { Users } from "../db/queries.js";
+
+import { Mails } from "../services/mailer.js";
+
+import { hashPassword } from "../middlewares/hash.js";
+
+import { body, matchedData } from "express-validator";
+
+import { validateInputs } from "../middlewares/validationInputs.js";
 
 const settingsRouter = express.Router();
-
-const { Users } = require("../db/queries.js");
-
-const { Mails } = require("../services/mailer.js");
-
-const { hashPassword } = require("../middlewares/hash.js");
-
-const { body, matchedData } = require("express-validator");
-
-const { validateInputs } = require("../middlewares/validationInputs.js");
 
 settingsRouter.get("/", async (req, res) => {
   const userData = await Users.getUserDataByUsername(req.session.user.name);
@@ -62,4 +62,4 @@ settingsRouter.patch(
   },
 );
 
-module.exports = { settingsRouter };
+export { settingsRouter };

@@ -1,4 +1,4 @@
-const { Projects, Tasks } = require("../db/queries.js");
+import { Projects, Tasks } from "../db/queries.js";
 
 async function addSampleProject(userId) {
   const schoolProjectId = await Projects.createProject(
@@ -67,4 +67,4 @@ async function addSampleProject(userId) {
   Projects.createProject("Home Deep Clean", userId);
 }
 
-module.exports = { addSampleProject };
+export { addSampleProject };

@@ -1,10 +1,21 @@
-const { Pool } = require("pg");
+import { Pool } from "pg";
 
-require("dotenv").config();
+import "dotenv/config";
 
 const pool = new Pool({
   connectionString: process.env.DATABASE_URL,
 });
+
+(async () => {
+  try {
+    const result = await pool.query("SELECT NOW()");
+    console.log("Connected to database:", result.rows[0].now);
+    return true;
+  } catch (error) {
+    console.error("Error connecting to the database:", error.message);
+    return false;
+  }
+})();
 
 class Users {
   static async createUser({ name, email, password }) {
@@ -297,4 +308,4 @@ class Tasks {
   }
 }
 
-module.exports = { Users, Projects, Tasks, pool };
+export { Users, Projects, Tasks, pool };

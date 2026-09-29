@@ -1,8 +1,8 @@
-const express = require("express");
+import express from "express";
 
-const { comparePassword } = require("../middlewares/hash.js");
+import { comparePassword } from "../middlewares/hash.js";
 
-const { Users } = require("../db/queries.js");
+import { Users } from "../db/queries.js";
 
 const loginRouter = express.Router();
 
@@ -45,4 +45,4 @@ loginRouter.post(
   },
 );
 
-module.exports = { loginRouter };
+export { loginRouter };

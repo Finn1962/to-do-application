@@ -1,9 +1,10 @@
+import createDOMPurify from "dompurify";
+import { JSDOM } from "jsdom";
+
 let DOMPurify;
 
 function getDOMPurify() {
   if (!DOMPurify) {
-    const createDOMPurify = require("dompurify");
-    const { JSDOM } = require("jsdom");
     const window = new JSDOM("").window;
     DOMPurify = createDOMPurify(window);
   }
@@ -15,4 +16,4 @@ function sanitizeHtml(dirtyHtml) {
   return getDOMPurify().sanitize(dirtyHtml);
 }
 
-module.exports = { sanitizeHtml };
+export { sanitizeHtml };

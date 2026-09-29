@@ -1,14 +1,14 @@
-const express = require("express");
+import express from "express";
 
-const { body, query, param, matchedData } = require("express-validator");
+import { body, query, param, matchedData } from "express-validator";
+
+import { Tasks } from "../db/queries.js";
+
+import { validateInputs } from "../middlewares/validationInputs.js";
+
+import { sanitizeHtml } from "../utils/sanitizer.js";
 
 const tasksRouter = express.Router();
-
-const { Tasks } = require("../db/queries.js");
-
-const { validateInputs } = require("../middlewares/validationInputs.js");
-
-const { sanitizeHtml } = require("../utils/sanitizer.js");
 
 tasksRouter.get(
   "/new/:projectId",
@@ -144,4 +144,4 @@ tasksRouter.delete(
   },
 );
 
-module.exports = { tasksRouter };
+export { tasksRouter };

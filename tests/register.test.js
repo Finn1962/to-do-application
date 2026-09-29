@@ -1,11 +1,12 @@
-const request = require("supertest");
-const { app } = require("../app.js");
+import request from "supertest";
 
-const { Users } = require("../src/db/queries.js");
+import { app } from "../app.js";
 
-const { Mails } = require("../src/services/mailer.js");
+import { Users } from "../src/db/queries.js";
 
-const { hashPassword } = require("../src/middlewares/hash.js");
+import { Mails } from "../src/services/mailer.js";
+
+import { hashPassword } from "../src/middlewares/hash.js";
 
 jest.mock("../src/utils/cleanups.js", () => ({
   accountsCleanup: jest.fn(),

@@ -1,35 +1,40 @@
-require("dotenv").config();
+import "dotenv/config";
 
-const express = require("express");
+import express from "express";
 
-const path = require("path");
+import path from "path";
 
-const session = require("express-session");
+import session from "express-session";
 
-const app = express();
-
-const {
+import {
   accountsCleanup,
   verificationTokenCleanup,
-} = require("./src/utils/cleanups.js");
+} from "./src/utils/cleanups.js";
 
-const { validateLogin } = require("./src/middlewares/validationLogin.js");
+import { validateLogin } from "./src/middlewares/validationLogin.js";
 
-const { homeRouter } = require("./src/routers/homeRouter.js");
+import { homeRouter } from "./src/routers/homeRouter.js";
 
-const { loginRouter } = require("./src/routers/loginRouter.js");
+import { loginRouter } from "./src/routers/loginRouter.js";
 
-const { registerRouter } = require("./src/routers/registerRouter.js");
+import { registerRouter } from "./src/routers/registerRouter.js";
 
-const { projectsRouter } = require("./src/routers/projectsRouter.js");
+import { projectsRouter } from "./src/routers/projectsRouter.js";
 
-const { tasksRouter } = require("./src/routers/tasksRouter.js");
+import { tasksRouter } from "./src/routers/tasksRouter.js";
 
-const { logoutRouter } = require("./src/routers/logoutRouter.js");
+import { logoutRouter } from "./src/routers/logoutRouter.js";
 
-const { settingsRouter } = require("./src/routers/settingsRouter.js");
+import { settingsRouter } from "./src/routers/settingsRouter.js";
 
-const { imagesRouter } = require("./src/routers/imagesRouter.js");
+import { imagesRouter } from "./src/routers/imagesRouter.js";
+
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
+const app = express();
 
 app.set("view engine", "ejs");
 
@@ -69,4 +74,4 @@ app.use("/settings", validateLogin, settingsRouter);
 
 app.use("/", validateLogin, homeRouter);
 
-module.exports = { app };
+export { app };

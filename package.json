@@ -1,6 +1,7 @@
 {
   "name": "mini-message-board",
   "version": "1.0.0",
+  "type": "module",
   "scripts": {
     "pretest": "clear",
     "test": "jest",
@@ -12,7 +13,7 @@
     "bootstrap": "^5.3.8",
     "dompurify": "^3.4.14",
     "dotenv": "^17.4.2",
-    "ejs": "^6.0.1",
+    "ejs": "^3.1.10",
     "express": "^5.2.1",
     "express-session": "^1.19.0",
     "express-validator": "^7.3.2",

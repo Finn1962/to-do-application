@@ -1,7 +1,15 @@
-const ejs = require("ejs");
-const path = require("path");
-const nodemailer = require("nodemailer");
-require("dotenv").config();
+import "dotenv/config";
+
+import ejs from "ejs";
+
+import path from "path";
+
+import nodemailer from "nodemailer";
+
+import { fileURLToPath } from "url";
+
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
 const mailTransporter = nodemailer.createTransport({
   pool: true,
@@ -19,9 +27,9 @@ const mailTransporter = nodemailer.createTransport({
 
 mailTransporter.verify((error) => {
   if (error) {
-    console.error("Fehler bei der SMTP-Verbindung:", error);
+    console.error("SMTP connection error:", error);
   } else {
-    console.log("SMTP-Server ist bereit zum Senden!");
+    console.log("SMTP server is connected");
   }
 });
 
@@ -105,4 +113,4 @@ class Mails {
   }
 }
 
-module.exports = { Mails };
+export { Mails };

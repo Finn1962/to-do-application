@@ -1,12 +1,12 @@
-const express = require("express");
+import express from "express";
 
-const { body, matchedData, param } = require("express-validator");
+import { body, matchedData, param } from "express-validator";
+
+import { validateInputs } from "../middlewares/validationInputs.js";
+
+import { Projects } from "../db/queries.js";
 
 const projectsRouter = express.Router();
-
-const { validateInputs } = require("../middlewares/validationInputs.js");
-
-const { Projects } = require("../db/queries.js");
 
 projectsRouter.get("/new", (req, res) => {
   res.render("newProjectForm");
@@ -107,4 +107,4 @@ projectsRouter.delete(
   },
 );
 
-module.exports = { projectsRouter };
+export { projectsRouter };

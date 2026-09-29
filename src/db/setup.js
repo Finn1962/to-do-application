@@ -1,6 +1,6 @@
-const { Client } = require("pg");
+import { Client } from "pg";
 
-require("dotenv").config();
+import "dotenv/config";
 
 async function createTables() {
   const client = new Client({

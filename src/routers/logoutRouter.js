@@ -1,4 +1,4 @@
-const express = require("express");
+import express from "express";
 
 const logoutRouter = express.Router();
 
@@ -12,4 +12,4 @@ logoutRouter.get("/", (req, res) => {
   });
 });
 
-module.exports = { logoutRouter };
+export { logoutRouter };

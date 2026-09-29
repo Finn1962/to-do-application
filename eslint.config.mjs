@@ -3,18 +3,28 @@ import globals from "globals";
 import { defineConfig } from "eslint/config";
 
 export default defineConfig([
+  js.configs.recommended,
+
   {
-    files: ["**/*.{js,mjs,cjs}"],
-    plugins: { js },
-    extends: ["js/recommended"],
-    languageOptions: { globals: globals.browser },
-  },
-  { files: ["**/*.js"], languageOptions: { sourceType: "commonjs" } },
-  {
+    files: ["**/*.js", "**/*.mjs"],
+    ignores: ["public/**/*.js"],
     languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
       globals: {
-        ...globals.node, // Aktiviert process, __dirname etc.
+        ...globals.node,
         ...globals.jest,
+      },
+    },
+  },
+
+  {
+    files: ["src/public/**/*.js"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module",
+      globals: {
+        ...globals.browser,
       },
     },
   },

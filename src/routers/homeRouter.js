@@ -1,12 +1,12 @@
-const express = require("express");
+import express from "express";
+
+import { query, param, matchedData } from "express-validator";
+
+import { validateInputs } from "../middlewares/validationInputs.js";
+
+import { Users, Projects, Tasks } from "../db/queries.js";
 
 const homeRouter = express.Router();
-
-const { query, param, matchedData } = require("express-validator");
-
-const { validateInputs } = require("../middlewares/validationInputs.js");
-
-const { Users, Projects, Tasks } = require("../db/queries.js");
 
 homeRouter.get(
   "/",
@@ -156,4 +156,4 @@ homeRouter.get(
   },
 );
 
-module.exports = { homeRouter };
+export { homeRouter };
